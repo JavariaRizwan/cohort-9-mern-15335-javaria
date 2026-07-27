@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Toaster, toast } from 'react-hot-toast';
+import axios from "axios";
 import { User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 const SignIn=({ onSuccess })=> {
@@ -15,16 +17,25 @@ const SignIn=({ onSuccess })=> {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    if (onSuccess) onSuccess();
-    navigate('/dashboard'); // Navigate to dashboard after login
+    try {
+      const response=await axios.post('http://localhost:5000/api/login-user', formData,
+        {withCredentials: true}
+      );
+      if (response.data.success) {
+        toast.success('Logged in successfully!');
+        navigate('/user_dashboard'); 
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || 'Login failed!');
+    }
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 dark:bg-slate-900 md:dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">    
-        {/* Left Section: Banner */}
         <div className="w-full md:w-5/12 bg-gradient-to-br from-teal-600 via-teal-500 to-emerald-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
           <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
           <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
@@ -48,7 +59,6 @@ const SignIn=({ onSuccess })=> {
           </div>
         </div>
 
-        {/* Right Section: Form */}
         <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto">
           <div className="mb-4">
             <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
@@ -117,7 +127,7 @@ const SignIn=({ onSuccess })=> {
 
             <button
               type="submit"
-              className="w-full mt-2 py-2 px-3 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group"
+              className="w-full cursor-pointer mt-2 py-2 px-3 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group"
             >
               <span>Log In</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
