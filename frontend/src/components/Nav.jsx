@@ -192,7 +192,6 @@ useEffect(() => {
             onClick={() => setMobileSearchOpen(true)}
             aria-label="Open search"
             className="md:hidden p-2 rounded-xl transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
-            aria-label="Search"
           >
             <Search size={19} strokeWidth={1.8} />
           </button>

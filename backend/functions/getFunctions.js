@@ -4,7 +4,10 @@ const getNotePerUser=async(req, res)=>{
     const userId = req.user?.userId;
 try {
     if(!userId){
-        return res.status(403).send("User not found");
+        return res.status(403).json({
+            success:false,
+            message: "User not found"
+        });
     }
     const response = await Notes.find({userId}).sort({createdAt: -1});
     return res.status(200).json({
