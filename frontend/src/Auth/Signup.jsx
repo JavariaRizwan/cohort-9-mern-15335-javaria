@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import { User, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
@@ -39,17 +40,21 @@ const SignUp=({ onSuccess })=> {
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
 
     e.preventDefault();
     try {
 
-      const response= await axios.post('https://localhost:5000/api/save-user');
-      navigate('/dashboard');
+      const response= await axios.post('http://localhost:5000/api/save-user', formData);
+      
+      if (response.data.success) {
+      toast.success("User registered successfully!");
+      navigate('/user_dashboard'); // Standardized route path
+    }
 
     } catch (error) {
-      toast.error("Error occured while registering user", error.message);
-    }
+    const errorMsg = error.response?.data?.message || "Error occurred while registering user";
+    toast.error(errorMsg);    }
     
   };
 
@@ -145,7 +150,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor='username' className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Username
 
@@ -185,7 +190,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Email Address
 
@@ -225,7 +230,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="password" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Password
 
