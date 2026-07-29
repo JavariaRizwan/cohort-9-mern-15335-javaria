@@ -200,4 +200,71 @@ const userId = req.user?.userId;
 }
 
 
-module.exports={saveUser, login, logout, createNewNote};
+const changePinStatus = async (req, res) => {
+  try {
+    const noteId = req.params.noteId;
+    const currentUserId = req.user?.userId || req.user?._id || req.user?.id;
+
+    const note = await Notes.findOne({ 
+      _id: noteId, 
+      userId: currentUserId 
+    });
+
+    if (!note) {
+      return res.status(404).json({ success: false, message: "Note not found or unauthorized" });
+    }
+
+    note.isPinned = !note.isPinned;
+    await note.save();
+
+    return res.status(200).json({
+      success: true,
+      message: `Note ${note.isPinned ? "pinned" : "unpinned"} successfully`,
+      response: note,
+    });
+  } catch (error) {
+    logger.warn(error.message);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
+
+const changeDeleteStatus = async (req, res) => {
+  try {
+    const { noteId } = req.params;
+
+    const updatedNote = await Notes.findOneAndUpdate(
+      { _id: noteId, userId: req.user?.userId },
+      { 
+        $set: { 
+          isDeleted: true,
+          isPinned: false 
+        } 
+      },
+      { new: true } 
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found or unauthorized",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Note moved to trash successfully",
+      response: updatedNote, 
+    });
+
+  } catch (error) {
+    logger.warn(error.message);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus};

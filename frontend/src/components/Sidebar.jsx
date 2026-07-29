@@ -69,7 +69,7 @@ const handleLogout=async()=>{
             </button>
             <button className="w-full flex cursor-pointer items-center gap-3 px-3 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Star size={18} />
-              Favorites
+              Pinned
             </button>
             <button className="w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Folder size={18} />
