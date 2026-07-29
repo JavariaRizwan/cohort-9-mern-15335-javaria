@@ -2,17 +2,23 @@ import { toast } from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
+/**
+ * @param {{ activeCategory?: string }} props
+ */
+
 const MainBody = ({ activeCategory }) => {
   const [notes, setNotes] = useState([]);
 
-  // Category Filtering
-  const filteredNotes = notes.filter((note) => {
-    if (!activeCategory || activeCategory === "all") return true;
-    if (activeCategory === "pinned") return note.isPinned;
+const filteredNotes = notes.filter((note) => {
     if (activeCategory === "trash") return note.isDeleted;
+    
+    if (note.isDeleted) return false;
+
+    if (!activeCategory || activeCategory === "all") return true;
+
+    if (activeCategory === "pinned") return note.isPinned;
     return note.category === activeCategory;
   });
-
   const getAllNotes = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/user-notes', {
@@ -51,7 +57,7 @@ const MainBody = ({ activeCategory }) => {
 
 const handleUpdate = (e, note) => {
     e.stopPropagation();
-    toast.info(`Editing feature coming soon for "${note.title}"!`);
+    toast.success(`Editing feature coming soon for "${note.title}"!`);
   };
   const handleDelete = async (e, noteId) => {
     e.stopPropagation();
