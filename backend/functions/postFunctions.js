@@ -75,7 +75,7 @@ try {
     });
     if(!user){
         logger.warn("No user found with these credentials");
-        return res.status(500).json({
+        return res.status(401).json({
             message:"Invalid Credentials",
             success:false
         })
@@ -100,7 +100,7 @@ try {
 
     res.cookie("token",token, {
         httpOnly:true,
-        secure: process.env.Node_ENV==='production',
+        secure: process.env.NODE_ENV==='production',
         sameSite:"lax"
     })
 
@@ -111,14 +111,13 @@ try {
         user:{
             userId:user._id,
             username:user.username,
-            password:user.password
         }
     });
 
 } catch (error) {
     logger.warn({error}, "Something unexpected happened.");
     return res.status(500).json({
-        message:error.message,
+        message:"Something went wrong. Please try again.",
         success:false
     })
 }
@@ -224,7 +223,7 @@ const changePinStatus = async (req, res) => {
     });
   } catch (error) {
     logger.warn(error.message);
-    return res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: "Something went wrong. Please try again." });
   }
 };
 
@@ -262,7 +261,7 @@ const changeDeleteStatus = async (req, res) => {
     logger.warn(error.message);
     return res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Something went wrong. Please try again.",
     });
   }
 };

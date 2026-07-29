@@ -22,7 +22,6 @@ const Middle = ({ onLogout }) => {
           />
         )}
 
-        {/* Sidebar */}
         <Sidebar 
           isOpen={sidebarOpen} 
           sidebarOpen={sidebarOpen}
@@ -32,7 +31,6 @@ const Middle = ({ onLogout }) => {
           onLogout={onLogout} 
         />
 
-        {/* Main Canvas / Content Feed */}
         <MainBody activeCategory={activeCategory} />
       </div>
     </div>
