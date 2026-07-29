@@ -1,4 +1,5 @@
 const bcrypt=require("bcryptjs")
+const logger = require("../src/config/logger");
 
 const hashPassword=async(password)=>{
     try {
