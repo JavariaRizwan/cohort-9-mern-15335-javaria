@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
   PanelLeft,
@@ -12,7 +13,7 @@ import {
   X
 } from 'lucide-react';
 
-export default function Navbar({ onToggleSidebar }) {
+export default function Navbar({ onToggleSidebar, onLogout }) {
   const [searchFocused, setSearchFocused] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -22,7 +23,23 @@ export default function Navbar({ onToggleSidebar }) {
   const lastScrollY = useRef(0);
   const profileRef = useRef(null);
   const searchRef = useRef(null);
-  
+  const navigate=useNavigate();
+
+
+const handleLogout=async()=>{
+  try {
+    await axios.post('http://localhost:5000/api/logout', 
+      {},
+      {withCredentials:true}
+    );
+    toast.success('User Logged out');
+    navigate('/signin', { replace: true });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
 useEffect(() => {
   const getUserName = async () => {
     try {
@@ -49,7 +66,6 @@ useEffect(() => {
   getUserName();
 }, []);
 
-  // Keyboard shortcut Ctrl+K
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -110,6 +126,7 @@ useEffect(() => {
           />
           <button 
             onClick={() => setMobileSearchOpen(false)}
+            aria-label="Close search overlay"
             className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <X size={20} />
@@ -173,6 +190,7 @@ useEffect(() => {
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
           <button
             onClick={() => setMobileSearchOpen(true)}
+            aria-label="Open search"
             className="md:hidden p-2 rounded-xl transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
             aria-label="Search"
           >
@@ -182,6 +200,8 @@ useEffect(() => {
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setProfileOpen(!profileOpen)}
+              aria-expanded={profileOpen}
+              aria-label="User profile menu"
               className="flex cursor-pointer items-center gap-1.5 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               <p className="hidden lg:block text-sm font-medium">
@@ -208,14 +228,15 @@ useEffect(() => {
                 </div>
 
                 <div className="p-1.5 space-y-0.5">
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
+                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
                     <Settings size={16} /> Preferences
                   </button>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
+                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
                     <Keyboard size={16} /> Shortcuts
                   </button>
                   <div className="my-1 border-t border-slate-100 dark:border-slate-700/80" />
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30">
+                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                  onClick={handleLogout}>
                     <LogOut size={16} /> Log Out
                   </button>
                 </div>

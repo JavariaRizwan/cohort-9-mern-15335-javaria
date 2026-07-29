@@ -150,7 +150,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor='username' className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Username
 
@@ -190,7 +190,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Email Address
 
@@ -230,7 +230,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="password" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
 
                 Password
 

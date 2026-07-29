@@ -6,7 +6,8 @@ const hashPassword=async(password)=>{
     return await bcrypt.hash(password, salt);
         
     } catch (error) {
-    logger.warn(`Password hashing failed: ${error.message}`);        
+    logger.warn(`Password hashing failed: ${error.message}`);
+    throw new Error(`Password hashing failed: ${error.message}`);       
     }
 }
 
