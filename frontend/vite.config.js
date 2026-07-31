@@ -10,7 +10,7 @@ export default defineConfig({
   ],
   server: {
     watch: {
-      usePolling: true, // Forces Vite to detect file changes on Windows/WSL
+      usePolling: true, 
     },
   },
 })
