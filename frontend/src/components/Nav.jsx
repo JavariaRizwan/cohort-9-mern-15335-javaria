@@ -2,16 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import {
-  PanelLeft,
-  Search,
-  Settings,
-  Keyboard,
-  ChevronDown,
-  CheckCircle2,
-  LogOut,
-  X
-} from 'lucide-react';
+import { PanelLeft, Search, User, Keyboard, ChevronDown, CheckCircle2, LogOut, X } from 'lucide-react';
 
 export default function Navbar({ onToggleSidebar, onLogout }) {
   const [searchFocused, setSearchFocused] = useState(false);
@@ -43,7 +34,6 @@ const handleLogout=async()=>{
 useEffect(() => {
   const getUserName = async () => {
     try {
-      // Direct token header fallback agar cookies block ho rahi hon
       const token = localStorage.getItem('token');
       
       const response = await axios.get('http://localhost:5000/api/verify', {
@@ -56,7 +46,6 @@ useEffect(() => {
       }
     } catch (error) {
       console.error('Failed to fetch user:', error.response?.data || error.message);
-      // Optional: Khali initial load par toast na dikhayen jab tak status 401 explicitly nah ho
       if (error.response?.status === 401) {
         toast.error('Session expired. Please log in again.');
       }
@@ -83,7 +72,7 @@ useEffect(() => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Hide header on scroll down, reveal on scroll up
+  // Hide header on scroll down and reveal on vertical scroll 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -109,12 +98,10 @@ useEffect(() => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Extract initial letter for avatar badge
   const userInitial = user?.username ? user.username.charAt(0).toUpperCase() : 'U';
 
   return (
     <>
-      {/* Mobile Search Overlay Bar */}
       {mobileSearchOpen ? (
         <div className="fixed top-0 left-0 right-0 h-16 bg-white dark:bg-slate-900 z-50 px-4 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in duration-150">
           <Search size={18} className="text-teal-500 shrink-0" />
@@ -134,13 +121,11 @@ useEffect(() => {
         </div>
       ) : null}
 
-      {/* Main Responsive Header */}
       <header
         className={`fixed top-0 left-0 right-0 h-16 z-40 transition-transform duration-300 ease-in-out ${
           hidden ? '-translate-y-full' : 'translate-y-0'
         } bg-white/90 dark:bg-slate-900/90 border-b border-slate-200/80 dark:border-slate-800/80 text-slate-800 dark:text-slate-100 backdrop-blur-md px-3 md:px-6 flex items-center justify-between shadow-xs`}
       >
-        {/* Left: Sidebar Toggle + Logo */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             onClick={() => {
@@ -227,10 +212,15 @@ useEffect(() => {
                 </div>
 
                 <div className="p-1.5 space-y-0.5">
-                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
-                    <Settings size={16} /> Preferences
-                  </button>
-                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60">
+<button 
+  onClick={() => {
+    setProfileOpen(false);
+    navigate('/user-profile');
+  }}
+  className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60"
+>
+  <User size={16} /> Profile
+</button>                  <button className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100 dark:hover:bg-slate-700/60" onClick={()=>navigate('/user-profile')}>
                     <Keyboard size={16} /> Shortcuts
                   </button>
                   <div className="my-1 border-t border-slate-100 dark:border-slate-700/80" />

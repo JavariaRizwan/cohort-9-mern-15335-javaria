@@ -66,7 +66,6 @@ const SignUp=({ onSuccess })=> {
 
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">        
 
-        {/* Left Section: Compact Banner */}
 
         <div className="w-full md:w-5/12 bg-gradient-to-br from-teal-600 via-teal-500 to-emerald-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
 
@@ -114,7 +113,6 @@ const SignUp=({ onSuccess })=> {
 
 
 
-        {/* Right Section: Compact Form */}
 
         <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto">
 
@@ -336,7 +334,6 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          {/* Footer Link: Using standard React Router Link */}
 
           <div className="mt-3 text-center text-[11px] text-slate-500 dark:text-slate-400">
 

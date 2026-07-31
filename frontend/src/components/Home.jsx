@@ -1,22 +1,10 @@
 import React from 'react';
-import { 
-  Sparkles, 
-  Search, 
-  Zap, 
-  ShieldCheck, 
-  FolderSync, 
-  Tags, 
-  ArrowRight, 
-  CheckCircle2, 
-  ChevronRight,
-  Code2
-} from 'lucide-react';
+import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronRight } from 'lucide-react';
 
 export default function Home({ onGetStarted, onSignIn }) {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       
-      {/* Top Floating Navbar for Landing Page */}
       <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-50 px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-2.5 cursor-pointer">
           <img 
@@ -46,19 +34,15 @@ export default function Home({ onGetStarted, onSignIn }) {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto text-center relative overflow-hidden">
-        {/* Subtle Ambient Glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/10 dark:bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-6">
-          {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-800/80 text-teal-700 dark:text-teal-300 text-xs font-semibold tracking-wide">
             <Sparkles size={14} className="text-teal-500" />
             <span>Next-Gen Workspace for Developer Notes</span>
           </div>
 
-          {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 max-w-3xl mx-auto leading-tight">
             Organize your memory stack with{' '}
             <span className="bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
@@ -66,12 +50,10 @@ export default function Home({ onGetStarted, onSignIn }) {
             </span>
           </h1>
 
-          {/* Subtitle */}
           <p className="text-base md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-normal">
             A fast, markdown-ready, and command-driven notebook built to structure your technical thoughts, snippets, and project architecture without friction.
           </p>
 
-          {/* Hero CTA Button */}
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onGetStarted}
@@ -82,7 +64,6 @@ export default function Home({ onGetStarted, onSignIn }) {
             </button>
           </div>
 
-          {/* Hero Feature Badges */}
           <div className="pt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 size={16} className="text-teal-500" /> Free Cloud Synchronization
@@ -97,7 +78,6 @@ export default function Home({ onGetStarted, onSignIn }) {
         </div>
       </section>
 
-      {/* Feature Highlights Grid */}
       <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
@@ -150,7 +130,6 @@ export default function Home({ onGetStarted, onSignIn }) {
         </div>
       </section>
 
-      {/* Bottom CTA Banner */}
       <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto my-12">
         <div className="rounded-3xl bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 p-8 md:p-12 text-white text-center shadow-xl relative overflow-hidden">
           <div className="relative z-10 space-y-4">
@@ -172,8 +151,7 @@ export default function Home({ onGetStarted, onSignIn }) {
           </div>
         </div>
       </section>
-
-      {/* Simple Footer */}
+ {/* Footer stylings*/}
       <footer className="py-8 border-t border-slate-200/80 dark:border-slate-800/80 text-center text-xs text-slate-500 dark:text-slate-400">
         <p>© {new Date().getFullYear()} StackNotes. All rights reserved.</p>
       </footer>

@@ -2,6 +2,8 @@
 import { toast } from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import CreateNote from './NotesPages/CreateNote';
+import DOMPurify from 'dompurify'
+
 import axios from "axios";
 import SortDropDown from "./NotesPages/SortDropDown";
 
@@ -225,9 +227,15 @@ const MainBody = ({ activeCategory }) => {
                     </div>
                   </div>
 
-                  <p className="text-slate-600 line-clamp-3 dark:text-slate-400 text-sm mt-1">
+                  {/* <p className="text-slate-600 line-clamp-3 dark:text-slate-400 text-sm mt-1">
                     {note.description}
-                  </p>
+                  </p> */}
+                  <div 
+  className="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-3 prose dark:prose-invert max-w-none"
+  dangerouslySetInnerHTML={{ 
+    __html: DOMPurify.sanitize(note.description || '') 
+  }}
+/>
                 </div>
               );
             })
