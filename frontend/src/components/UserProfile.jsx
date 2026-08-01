@@ -1,35 +1,14 @@
-import React, { useState } from 'react';
-import { 
-  User, 
-  Mail, 
-  Calendar, 
-  Clock, 
-ArrowLeftIcon,
-  FileText, 
-  Trash2, 
-  LogOut, 
-  ShieldCheck, 
-  Sparkles,
-  ArrowRight
-} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { User, Mail, Calendar, Clock, ArrowLeftIcon, FileText, Trash2, LogOut, ShieldCheck, ArrowRight } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 const UserProfile = ({ onLogout, onNavigateToTrash }) => {
   const navigate = useNavigate();
+  const [profileData, setProfileData]=useState({user:null, notes:[], loading:true});
 
-  const [user] = useState({
-    name: "Hania Iman",
-    email: "abc@gmail.com"
-  });
 
-  const [stats] = useState({
-    totalNotes: 12,
-    trashCount: 3,
-    lastLogin: new Date().toISOString(),
-    memberSince: "2024-01-15T00:00:00.000Z",
-  });
 
   const handleLogout = async () => {
     try {
@@ -63,9 +42,38 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
     });
   };
 
+useEffect(()=>{
+
+  const getUserData=async()=>{
+    try {
+    const response=await axios.get('http://localhost:5000/api/user-notes', {withCredentials: true});
+    if(response.data.success){
+      setProfileData({user:response.data.user, notes:response.data.notes, loading:false }); 
+    }
+      
+    } catch (error) {
+  console.error("Failed to get Profile",error.message);  
+  toast.info("Error occured while fetching profile. Try again")    
+    }
+  }
+
+  getUserData();
+}, [])
+
+
+if(profileData.loading){
+  return <div className="p-8 text-center">Loading profile...</div>;
+}
+
+const {user, notes} = profileData;
+const totalNotes = notes? notes.length : 0;
+const trashItems= notes? notes.filter(note=> note.isDeleted).length : 0;
+
+
+
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 sm:p-5 shadow-xl">
        <button 
     onClick={() => navigate('/user_dashboard')} 
     className="inline-flex items-center cursor-pointer gap-2 text-sm font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors mb-4"
@@ -77,25 +85,26 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
           <div className="flex flex-col sm:flex-row items-center gap-5">
             <div className="relative">
 <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-teal-600 via-teal-500 to-emerald-400 text-white border-4 border-slate-100 dark:border-slate-800 shadow-md flex items-center justify-center font-bold text-3xl">
-  {user.name ? user.name.charAt(0).toUpperCase() : <User className="w-12 h-12" />}
+  {user.username ? user.username.charAt(0).toUpperCase() : <User className="w-12 h-12" />}
 </div>
               <span className="absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full" title="Active Session" />
             </div>
 
-            <div className="space-y-1">
-              <div className="flex items-center justify-center sm:justify-start gap-2">
-                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
-                  {user.name}
-                </h1>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800/50">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Verified
-                </span>
-              </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center sm:justify-start gap-1.5">
-                <Mail className="w-4 h-4 text-slate-400" />
-                {user.email}
-              </p>
-            </div>
+<div className="space-y-1">
+  <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-2">
+    <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
+      {user?.username}
+    </h1>
+    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 border border-teal-200 dark:border-teal-800/50">
+      <ShieldCheck className="w-3.5 h-3.5" /> Verified
+    </span>
+  </div>
+
+  <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center justify-center sm:justify-start gap-1.5">
+    <Mail className="w-4 h-4 text-slate-400" />
+    {user?.email}
+  </p>
+</div>
           </div>
 
           <button
@@ -115,7 +124,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Notes</p>
-            <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.totalNotes}</p>
+            <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{totalNotes}</p>
           </div>
         </div>
 
@@ -126,7 +135,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Trash Bin</p>
-              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{stats.trashCount}</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-slate-100">{trashItems}</p>
             </div>
           </div>
           {onNavigateToTrash && (
@@ -147,7 +156,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Member Since</p>
             <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">
-              {formatDate(stats.memberSince)}
+              {formatDate(user.createdAt)}
             </p>
           </div>
         </div>
@@ -159,7 +168,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Last Login</p>
             <p className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">
-              {formatTimeAgo(stats.lastLogin)}
+              {formatTimeAgo(user.lastLogin)}
             </p>
           </div>
         </div>
@@ -167,7 +176,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
 
       <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-md p-6 space-y-6">
         <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-4">
-          <Sparkles className="w-5 h-5 text-teal-500" />
+          
           <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Account Configuration</h2>
         </div>
 
@@ -175,7 +184,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
           <div className="space-y-1.5">
             <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Full Name</label>
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-sm font-medium text-slate-800 dark:text-slate-200">
-              {user.name}
+              {user.username}
             </div>
           </div>
 

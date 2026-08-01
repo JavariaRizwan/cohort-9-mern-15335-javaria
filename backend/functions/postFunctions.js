@@ -266,4 +266,38 @@ const changeDeleteStatus = async (req, res) => {
   }
 };
 
-module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus};
+
+const editNote=async(req, res)=>{
+ const {noteId}=req.params;
+ const userId=req.user?.userId;
+ const {title, description}=req.body;
+  try {
+    
+    const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId}, {
+      title: title,
+      description:description
+    },
+  {new:true}
+);
+if(!response){
+  return res.status(404).json({
+    success:false,
+    message:"Note not found or unauthorized"
+  })
+}
+  return res.status(200).json({
+    success:true,
+    message:"Note updated successfully",
+    note:response
+  })
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}
+
+
+
+module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus, editNote};

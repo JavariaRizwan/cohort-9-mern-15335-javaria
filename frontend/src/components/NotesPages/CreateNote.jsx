@@ -13,7 +13,7 @@ const getCharCount = (html) => {
 };
 
 
-const CreateNote = ({ isOpen, onClose, onSaveNote }) => {
+const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
     const [user, setUser] = useState("");
     const editor = useRef(null);
     const [content, setContent] = useState('');
@@ -38,6 +38,28 @@ const CreateNote = ({ isOpen, onClose, onSaveNote }) => {
         category: '',
         subCategory: '',
     });
+
+useEffect(()=>{
+    if(isEditingNote){
+        setFormData({
+            title:isEditingNote.title || '',
+            description:isEditingNote.description || '',
+            category:isEditingNote.category || '',
+            subCategory:isEditingNote.subCategory || ''
+        });
+        setContent(isEditingNote.description || '');
+    }
+    else{
+        setFormData({
+            title:'',
+            description:'',
+            category:'',
+            subCategory:''
+        });
+        setContent('');
+    }
+}, [isEditingNote, isOpen])
+
 
     useEffect(() => {
         const getUserName = async () => {
@@ -87,12 +109,22 @@ const CreateNote = ({ isOpen, onClose, onSaveNote }) => {
         };
 
         try {
-            const response = await axios.post(
+            let response;
+            if(isEditingNote){
+                const noteId=isEditingNote._id;
+                 response = await axios.put(`http://localhost:5000/api/edit-note/${noteId}`,
+                    payload, {withCredentials: true}
+                );
+            }
+            else{
+            response = await axios.post(
                 'http://localhost:5000/api/create-note',
                 payload,
                 { withCredentials: true }
             );
 
+            }
+            
             if (response.data.success) {
                 onSaveNote(response.data.note);
                 setFormData({
@@ -102,8 +134,8 @@ const CreateNote = ({ isOpen, onClose, onSaveNote }) => {
                     subCategory: '',
                 });
                 setContent('');
-                toast.success("Note created successfully!");
-                onClose(); // Navigates back to dashboard
+                toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
+                onClose(); 
             }
         } catch (error) {
             console.error("Actual error:", error);

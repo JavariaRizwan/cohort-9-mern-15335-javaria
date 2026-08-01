@@ -11,7 +11,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         lowercase:true,
         required:[true, "email is requried"],
-        time:true,
+        trim:true,
         match: [
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         "Please enter a valid email",
@@ -21,6 +21,10 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:[true, "Password is required"],
         minlength:[6, "Minimum 6 characters required for password"]
+    },
+    lastLogin:{
+        type:Date,
+        default: Date.now(),
     },
     emailUpdates:{
         type:Boolean,

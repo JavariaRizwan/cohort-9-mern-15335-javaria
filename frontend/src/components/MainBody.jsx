@@ -11,8 +11,27 @@ const MainBody = ({ activeCategory }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("date-desc");
+  const [isEditingNote, setIsEditingNote]=useState(null)
+  
+  const getAllNotes = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/user-notes', {
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        setNotes(response.data.notes);
+      }
+    } catch (error) {
+      console.error("Fetch notes error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || "Failed to fetch notes");
+    }
+  };
 
-  const filteredNotes = notes.filter((note) => {
+  useEffect(() => {
+    getAllNotes();
+  }, []);
+
+const filteredNotes = notes.filter((note) => {
     if (!activeCategory || activeCategory === "all") return true;
     if (activeCategory === "pinned") return note.isPinned;
     if (activeCategory === "trash") return note.isDeleted;
@@ -28,23 +47,7 @@ const MainBody = ({ activeCategory }) => {
     return 0;
   });
 
-  const getAllNotes = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/user-notes', {
-        withCredentials: true,
-      });
-      if (response.data.success) {
-        setNotes(response.data.response || []);
-      }
-    } catch (error) {
-      console.error("Fetch notes error:", error.response?.data || error.message);
-      toast.error(error.response?.data?.message || "Failed to fetch notes");
-    }
-  };
 
-  useEffect(() => {
-    getAllNotes();
-  }, []);
 
   const handleSaveNote = () => {
     getAllNotes();
@@ -54,7 +57,7 @@ const MainBody = ({ activeCategory }) => {
   const handlePin = async (e, noteId) => {
     e.stopPropagation();
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `http://localhost:5000/api/pin-note/${noteId}`,
         {},
         { withCredentials: true }
@@ -72,23 +75,26 @@ const MainBody = ({ activeCategory }) => {
   const handleDelete = async (e, noteId) => {
     e.stopPropagation();
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `http://localhost:5000/api/delete-note/${noteId}`,
         {},
         { withCredentials: true }
       );
       if (response.data?.success) {
         toast.success(response.data.message || "Note deleted successfully");
-        setNotes((prevNotes) => prevNotes.filter((n) => (n._id || n.id) !== noteId));
+        // setNotes((prevNotes) => prevNotes.filter((n) => (n._id || n.id) !== noteId));
+        getAllNotes();
       }
     } catch (error) {
-      console.error("Delete error:", error.response?.data || error.message);
-      toast.error(error.response?.data?.message || "Failed to delete note");
+      console.error("Delete error:", error.message);
+      toast.error("Failed to delete note");
     }
   };
 
   const handleUpdate = async (e, note) => {
     e.stopPropagation();
+    setIsEditingNote(note);
+    setIsModelOpen(true);
   };
 
   return (
@@ -152,7 +158,6 @@ const MainBody = ({ activeCategory }) => {
                     </h3>
 
                     <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
-                      {/* Pin Button */}
                       <button
                         type="button"
                         onClick={(e) => {
@@ -181,7 +186,6 @@ const MainBody = ({ activeCategory }) => {
                         </svg>
                       </button>
 
-                      {/* Edit Button */}
                       <button
                         type="button"
                         onClick={(e) => handleUpdate(e, note)}
@@ -203,7 +207,6 @@ const MainBody = ({ activeCategory }) => {
                         </svg>
                       </button>
 
-                      {/* Delete Button */}
                       <button
                         type="button"
                         onClick={(e) => handleDelete(e, currentId)}
@@ -227,13 +230,10 @@ const MainBody = ({ activeCategory }) => {
                     </div>
                   </div>
 
-                  {/* <p className="text-slate-600 line-clamp-3 dark:text-slate-400 text-sm mt-1">
-                    {note.description}
-                  </p> */}
                   <div 
-  className="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-3 prose dark:prose-invert max-w-none"
+  className="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-1 prose dark:prose-invert max-w-none"
   dangerouslySetInnerHTML={{ 
-    __html: DOMPurify.sanitize(note.description || '') 
+    __html: DOMPurify.sanitize(note.description) 
   }}
 />
                 </div>
@@ -247,6 +247,7 @@ const MainBody = ({ activeCategory }) => {
         isOpen={isModelOpen}
         onClose={() => setIsModelOpen(false)}
         onSaveNote={handleSaveNote}
+        isEditingNote={isEditingNote}
       />
     </>
   );
