@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import JoditEditor from 'jodit-react';
 import { toast } from 'react-hot-toast';
-import { ArrowLeft,  Tag, Check } from 'lucide-react';
+import { ArrowLeft, Tag, Check } from 'lucide-react';
 import categories from "../../data/categories";
 import axios from "axios";
 
@@ -18,7 +18,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
 
-    const config = {
+    const config = useMemo(() => ({
         readonly: false,
         placeholder: 'Start typing your detailed note here...',
         height: 'calc(100vh - 220px)',
@@ -30,7 +30,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             'align', 'undo', 'redo', '|',
             'hr', 'eraser'
         ]
-    };
+    }), []);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -142,7 +142,10 @@ useEffect(()=>{
 }
         } catch (error) {
             console.error("Error happened:", error);
-            toast.error("Failed to create note!");
+toast.error(
+        error.response?.data?.message || 
+        (isEditingNote ? "Failed to update note!" : "Failed to create note!")
+    );
         }
     };
 

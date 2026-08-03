@@ -34,6 +34,20 @@ const MainBody = ({ activeCategory }) => {
     getAllNotes();
   }, []);
 
+
+
+
+const handleOpenCreateModal = () => {
+    setIsEditingNote(null); 
+    setIsModelOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModelOpen(false);
+    setIsEditingNote(null); 
+  };
+
+
 const filteredNotes = notes.filter((note) => {
     if (!activeCategory || activeCategory === "all") return true;
     if (activeCategory === "pinned") return note.isPinned;
@@ -85,7 +99,7 @@ const filteredNotes = notes.filter((note) => {
         getAllNotes();
       }
     } catch (error) {
-      console.error("Delete error:", error.message);
+      console.error("Delete error:", error.response?.data || error.message);
       toast.error("Failed to delete note");
     }
   };
@@ -111,7 +125,7 @@ const filteredNotes = notes.filter((note) => {
 
           <button
             type="button"
-            onClick={() => setIsModelOpen(true)}
+            onClick={handleOpenCreateModal}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 text-white font-medium text-xs sm:text-sm px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer shrink-0"
           >
             <svg
@@ -232,7 +246,7 @@ const filteredNotes = notes.filter((note) => {
                   <div 
   className="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-1 prose dark:prose-invert max-w-none"
   dangerouslySetInnerHTML={{ 
-    __html: DOMPurify.sanitize(note.description) 
+    __html: DOMPurify.sanitize(note.description || '') 
   }}
 />
                 </div>
@@ -244,7 +258,7 @@ const filteredNotes = notes.filter((note) => {
 
       <CreateNote
         isOpen={isModelOpen}
-        onClose={() => setIsModelOpen(false)}
+        onClose={handleCloseModal}
         onSaveNote={handleSaveNote}
         isEditingNote={isEditingNote}
       />
