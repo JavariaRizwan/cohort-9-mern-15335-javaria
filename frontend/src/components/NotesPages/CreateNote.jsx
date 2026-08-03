@@ -137,6 +137,9 @@ useEffect(()=>{
                 toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
                 onClose(); 
             }
+            else {
+  toast.error(response.data.message || "Something went wrong");
+}
         } catch (error) {
             console.error("Error happened:", error);
             toast.error("Failed to create note!");
@@ -239,7 +242,7 @@ useEffect(()=>{
                         className="px-3 py-1.5 text-sm rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 outline-none focus:ring-2 focus:ring-teal-500/30 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
                     >
                         <option value="">Select subcategory</option>
-                        {formData.category && categories[formData.category].map((sub) => (
+                        {formData.category && categories[formData.category]?.map((sub) => (
                             <option key={sub} value={sub}>{sub}</option>
                         ))}
                     </select>
