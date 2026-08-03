@@ -69,6 +69,14 @@ const filteredNotes = notes.filter((note) => {
     setIsEditingNote(null);
   };
 
+
+const handleKeyDownNote = (e, note) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleUpdate(e, note);
+    }
+  };
+
   const handlePin = async (e, noteId) => {
     e.stopPropagation();
     try {

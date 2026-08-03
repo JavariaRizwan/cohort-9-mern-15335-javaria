@@ -72,7 +72,6 @@ useEffect(() => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Hide header on scroll down and reveal on vertical scroll 
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
@@ -87,7 +86,6 @@ useEffect(() => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close profile dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (profileRef.current && !profileRef.current.contains(e.target)) {
@@ -139,13 +137,14 @@ useEffect(() => {
 
           <div className="flex items-center gap-2 cursor-pointer select-none">
             <img 
-              src="/sticky-notes.png" 
+              // src="/sticky-notes.png"
+              src="/notes.png"
               alt="StackNotes Logo" 
               className="w-7 h-7 sm:w-8 sm:h-8 object-contain"
             />
-            <span className="text-base sm:text-lg font-bold tracking-tight bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
-              StackNotes
-            </span>
+<span className="text-base sm:text-lg font-bold tracking-tight text-[#5B5BFF] dark:text-[#7CAED3]">
+  StackNotes
+</span>
           </div>
         </div>
 
@@ -186,14 +185,14 @@ useEffect(() => {
               onClick={() => setProfileOpen(!profileOpen)}
               aria-expanded={profileOpen}
               aria-label="User profile menu"
-              className="flex cursor-pointer items-center gap-1.5 p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="flex cursor-pointer items-center gap-1.5 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               <p className="hidden lg:block text-sm font-medium">
         {user?.username || 'Guest User'}
       </p>
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-teal-600 to-emerald-400 text-white flex items-center justify-center font-bold text-sm shadow-xs">
-                {userInitial}
-              </div>
+           <div className="w-8 h-8 rounded-full bg-[#5B5BFF] text-white flex items-center justify-center font-bold text-sm shadow-xs">
+  {userInitial}
+</div>
               <ChevronDown size={14} className="text-slate-500 dark:text-slate-400" />
             </button>
 
