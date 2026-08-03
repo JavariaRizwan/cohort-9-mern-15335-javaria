@@ -270,14 +270,24 @@ const changeDeleteStatus = async (req, res) => {
 const editNote=async(req, res)=>{
  const {noteId}=req.params;
  const userId=req.user?.userId;
- const {title, description}=req.body;
+ let {title, description}=req.body;
+
+ title=title?.trim();
+ description=description?.trim();
+
+ if(!title || !description){
+  return res.status(400).json({
+    success:false,
+    message:"Title and description are required!"
+  })
+ }
   try {
     
     const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId}, {
       title: title,
       description:description
     },
-  {new:true}
+  {new:true, runValidators:true}
 );
 if(!response){
   return res.status(404).json({

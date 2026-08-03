@@ -7,7 +7,8 @@ const CATEGORIES = {
   "Personal & Wellness": ["Daily Journal", "Medical Log", "Habit Trackers", "Media Lists"],
   "Cosmetic": ["Skincare Routine", "Product Wishlist", "Beauty Appointments"],
   "Grocery": ["Weekly List", "Bulk Buy", "Household Items"],
-  "Other": ["Miscellaneous"]
+  "Other": ["Miscellaneous"],
+  "General": ["General Notes", "Ideas", "Random Thoughts"]
 };
 
 module.exports = CATEGORIES;
