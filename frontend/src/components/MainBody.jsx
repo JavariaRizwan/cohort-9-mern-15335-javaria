@@ -6,6 +6,9 @@ import DOMPurify from 'dompurify'
 
 import axios from "axios";
 import SortDropDown from "./NotesPages/SortDropDown";
+import sortingOptions from '../data/sortingOptions';
+
+
 
 const MainBody = ({ activeCategory }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
@@ -39,12 +42,8 @@ const filteredNotes = notes.filter((note) => {
   });
 
   const sortedNotes = [...filteredNotes].sort((a, b) => {
-    if (sortBy === "date-desc") return new Date(b.createdAt) - new Date(a.createdAt);
-    if (sortBy === "date-asc") return new Date(a.createdAt) - new Date(b.createdAt);
-    if (sortBy === "title-asc") return a.title.localeCompare(b.title);
-    if (sortBy === "title-desc") return b.title.localeCompare(a.title);
-    if (sortBy === "pinned-first") return (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0);
-    return 0;
+    const activeOption= sortingOptions.find((option) => option.value === sortBy);
+    return activeOption?.compareFn ? activeOption.compareFn(a, b) : 0;
   });
 
 

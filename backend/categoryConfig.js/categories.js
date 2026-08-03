@@ -1,8 +1,8 @@
 
 const CATEGORIES = {
-  "Work & Career": ["Projects", "Meeting Notes", "Career Growth", "Swipe File"],
+  "Work & Career": ["Projects", "Meeting Notes", "Career Growth", "Milestones"],
   "Finance & Admin": ["Budgeting", "Financial Goals", "Document Scans", "Warranties"],
-  "Kitchen & Food": ["Recipe Box", "Meal Planning", "Pantry Inventory", "Kitchen Cheat Sheets"],
+  "Kitchen & Food": ["Recipe Box", "Meal Planning", "Kitchen Cheat Sheets"],
   "Home & Life Logistics": ["Home Maintenance", "Vehicle Info", "Pet Care", "Packing Lists"],
   "Personal & Wellness": ["Daily Journal", "Medical Log", "Habit Trackers", "Media Lists"],
   "Cosmetic": ["Skincare Routine", "Product Wishlist", "Beauty Appointments"],

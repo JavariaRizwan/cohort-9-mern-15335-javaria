@@ -138,8 +138,8 @@ useEffect(()=>{
                 onClose(); 
             }
         } catch (error) {
-            console.error("Actual error:", error);
-            toast.error(error.response?.data?.message || "Failed to create note!");
+            console.error("Error happened:", error);
+            toast.error("Failed to create note!");
         }
     };
 
