@@ -49,10 +49,11 @@ const handleOpenCreateModal = () => {
 
 
 const filteredNotes = notes.filter((note) => {
+    if (activeCategory === "trash") return note.isDeleted;
+    if (note.isDeleted) return false; // if the note is dleetd donot show it on the main body page
     if (!activeCategory || activeCategory === "all") return true;
     if (activeCategory === "pinned") return note.isPinned;
-    if (activeCategory === "trash") return note.isDeleted;
-    return note.category === activeCategory;
+    return note.category === activeCategory;  
   });
 
   const sortedNotes = [...filteredNotes].sort((a, b) => {
@@ -65,6 +66,7 @@ const filteredNotes = notes.filter((note) => {
   const handleSaveNote = () => {
     getAllNotes();
     setIsModelOpen(false);
+    setIsEditingNote(null);
   };
 
   const handlePin = async (e, noteId) => {
