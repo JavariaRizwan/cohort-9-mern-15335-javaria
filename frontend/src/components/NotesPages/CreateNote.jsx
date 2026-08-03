@@ -20,7 +20,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
 
     const config = useMemo(() => ({
         readonly: false,
-        placeholder: 'Start typing your detailed note here...',
+        placeholder: isEditingNote ? '' : 'Start typing your detailed note here...',
         height: 'calc(100vh - 220px)',
         buttons: [
             'bold', 'italic', 'underline', 'strikethrough', '|',
@@ -30,7 +30,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             'align', 'undo', 'redo', '|',
             'hr', 'eraser'
         ]
-    }), []);
+    }), [isEditingNote]);
 
     const [formData, setFormData] = useState({
         title: '',

@@ -157,9 +157,12 @@ const filteredNotes = notes.filter((note) => {
             sortedNotes.map((note) => {
               const currentId = note._id || note.id;
               return (
-                <div
-                  key={currentId}
-                  className={`group relative bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
+                <button
+                tabIndex={0}
+                onKeyDown={(e) => handleKeyDownNote(e, note)}
+                onClick={(e) => handleUpdate(e, note)}
+              key={currentId}
+                  className={`group relative text-left w-full bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
                     note.isPinned
                       ? "border-l-amber-500 bg-amber-50/20 dark:bg-amber-950/10"
                       : "border-l-teal-500"
@@ -249,7 +252,7 @@ const filteredNotes = notes.filter((note) => {
     __html: DOMPurify.sanitize(note.description || '') 
   }}
 />
-                </div>
+                </button>
               );
             })
           )}
