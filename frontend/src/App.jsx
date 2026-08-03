@@ -7,6 +7,8 @@ import SignUp from './Auth/SignUp';
 import SignIn from './Auth/SignIn';
 import Middle from './components/Middle';
 import NotFound from './components/NotFound';
+import ProtectedRoute from './Auth/ProtectedRoute';
+import UserProfile from './components/UserProfile';
 
 
 const App = () => {
@@ -14,7 +16,6 @@ const App = () => {
 
   const handleLoginSuccess = () => {
     toast.success('Successfully logged in!');
-    // Redirect cleanly to user dashboard upon login
     navigate('/user_dashboard');
   };
 
@@ -25,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <Toaster position="bottom-right" />
+      <Toaster position="top-right" />
       <Routes>
         <Route 
           path="/" 
@@ -46,10 +47,14 @@ const App = () => {
           element={<SignIn onSuccess={handleLoginSuccess} />} 
         />
 
+         
+          <Route element={<ProtectedRoute />}>
         <Route 
           path="/user_dashboard" 
           element={<Middle onLogout={handleLogout} />} 
         />
+        </Route>
+         <Route path='/user-profile' element={<UserProfile />} />
         <Route 
           path="*" 
           element={<NotFound />} 
