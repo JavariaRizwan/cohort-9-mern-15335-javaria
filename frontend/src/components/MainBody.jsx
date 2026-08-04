@@ -67,7 +67,7 @@ const filteredNotes = notes.filter((note) => {
   if (currentCategory === "pinned"){return (note.isPinned && matchingSearch)};
   if (!currentCategory || currentCategory === "all"){ return matchingSearch;}
   if(note.isDeleted && currentCategory === "trash"){ return note.isDeleted && matchingSearch;}  
-  if(note.isArchived && currentCategory === "archived"){ return note.isArchved && matchingSearch;}  
+  if(note.isArchived && currentCategory === "archived"){ return note.isArchived && matchingSearch;}  
     
     return note.category === currentCategory && matchingSearch;  
   });

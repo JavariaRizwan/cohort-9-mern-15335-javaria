@@ -3,7 +3,7 @@ import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronR
 
 export default function Home({ onGetStarted, onSignIn }) {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen overflow-y-auto bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       
       <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-50 px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-2.5 cursor-pointer">
@@ -17,21 +17,40 @@ export default function Home({ onGetStarted, onSignIn }) {
 </span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
+        {/* <div className="flex items-center gap-3">
+          <button type="button"
             onClick={onSignIn}
             className="px-4 py-2 cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
             Sign In
           </button>
           <button
+          type="button"
             onClick={onGetStarted}
-           className="px-4 cursor-pointer py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
+           className="px-4 cursor-pointer group py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
           >
             <span className='cursor-pointer'>Let's get Started</span>
             <ChevronRight size={16}  />
           </button>
+        </div> */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button 
+            type="button"
+            onClick={onSignIn}
+            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={onGetStarted}
+            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer group text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1"
+          >
+            <span>Get Started</span>
+            <ChevronRight size={14} className="sm:w-4 sm:h-4" />
+          </button>
         </div>
+        
       </nav>
 
       <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto text-center relative overflow-hidden">
@@ -56,6 +75,7 @@ export default function Home({ onGetStarted, onSignIn }) {
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
+            type="button"
               onClick={onGetStarted}
               className="px-4 cursor-pointer py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
             >
@@ -67,12 +87,15 @@ export default function Home({ onGetStarted, onSignIn }) {
           <div className="pt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
             <span className="flex items-center gap-1.5">
              <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+             <span>Instant Command Search</span>
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+              <span>Pin Important Notes</span>
             </span>
             <span className="flex items-center gap-1.5">
         <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+              <span>Organize with Categories</span>
             </span>
           </div>
         </div>
@@ -141,6 +164,7 @@ export default function Home({ onGetStarted, onSignIn }) {
             </p>
             <div className="pt-2 cursor-pointer">
               <button
+              type="button"
                 onClick={onGetStarted}
                 className="px-8 cursor-pointer py-3.5 text-sm font-bold text-blue-900 bg-white hover:bg-slate-100 rounded-xl shadow-md transition-all inline-flex items-center gap-2"
               >
