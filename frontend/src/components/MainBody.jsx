@@ -183,7 +183,7 @@ const handleKeyDownNote = (e, note) => {
             sortedNotes.map((note) => {
               const currentId = note._id || note.id;
               return (
-                <button type="button"
+                <div role="button"
                 tabIndex={0}
                 onKeyDown={(e) => handleKeyDownNote(e, note)}
                 onClick={(e) => handleUpdate(e, note)}
@@ -278,7 +278,7 @@ const handleKeyDownNote = (e, note) => {
     __html: DOMPurify.sanitize(note.description || '') 
   }}
 />
-                </button>
+                </div>
               );
             })
           )}
