@@ -36,25 +36,25 @@ const SignIn=({ onSuccess })=> {
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 dark:bg-slate-900 md:dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">    
-        <div className="w-full md:w-5/12 bg-gradient-to-br from-teal-600 via-teal-500 to-emerald-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
-          <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
-          <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
+        <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
+  <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
+  <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-indigo-400/20 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md p-2 flex items-center justify-center shadow-sm border border-white/20 mb-2">
               <img 
-                src="/sticky-notes.png" 
+                src="/notes.png" 
                 alt="StackNotes Logo" 
                 className="w-full h-full object-contain drop-shadow-md"
               />
             </div>
             <h1 className="text-xl font-extrabold tracking-tight">StackNotes</h1>
-            <p className="text-teal-100/90 text-[11px] mt-0.5 font-medium leading-snug">
+            <p className="text-blue-100/90 text-[11px] mt-0.5 font-medium leading-snug">
               Welcome back to your workspace.
             </p>
           </div>
 
-          <div className="relative z-10 text-center md:text-left text-[11px] text-teal-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
+          <div className="relative z-10 text-center md:text-left text-[11px] text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
             <p>Access all your synchronized notes.</p>
           </div>
         </div>
@@ -85,7 +85,7 @@ const SignIn=({ onSuccess })=> {
                   onChange={handleChange}
                   required
                   placeholder="Enter your username/email"
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
                 />
               </div>
             </div>
@@ -97,7 +97,7 @@ const SignIn=({ onSuccess })=> {
                 </label>
                 <button
                   type="button"
-                  className="text-[10px] font-medium text-teal-600 dark:text-teal-400 hover:underline"
+                  className="text-[10px] font-medium text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   Having trouble in sign in?
                 </button>
@@ -113,7 +113,7 @@ const SignIn=({ onSuccess })=> {
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
                 />
                 <button
                   type="button"
@@ -127,7 +127,7 @@ const SignIn=({ onSuccess })=> {
 
             <button
               type="submit"
-              className="w-full cursor-pointer mt-2 py-2 px-3 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group"
+              className="w-full cursor-pointer mt-2 py-2 px-3 bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group"
             >
               <span>Log In</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
@@ -138,7 +138,7 @@ const SignIn=({ onSuccess })=> {
             Don't have an account?{' '}
             <button
               onClick={() => navigate('/signup')}
-              className="text-teal-600 dark:text-teal-400 font-semibold hover:underline"
+              className="text-blue-600 dark:text-blue-400 cursor-pointer font-semibold hover:underline"
             >
               Signup Now
             </button>
