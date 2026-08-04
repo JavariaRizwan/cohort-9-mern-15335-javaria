@@ -141,10 +141,10 @@ const handleKeyDownNote = (e, note) => {
       <main className="flex-1 p-3 sm:p-5 md:p-6 max-w-5xl mx-auto space-y-4">
         <div className="flex items-center justify-between gap-4 pb-1">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight capitalize">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight capitalize">
               {activeCategory ? `${activeCategory} Notes` : "My Notes"}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <p className="text-xs sm:text-sm text-slate-500">
               Manage and organize your ideas
             </p>
           </div>
@@ -172,9 +172,9 @@ const handleKeyDownNote = (e, note) => {
 
         <div className="space-y-3">
           {sortedNotes.length === 0 ? (
-            <div className="bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
+            <div className="bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
               <div className="flex justify-between items-start">
-                <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
+                <h3 className="font-semibold text-slate-900 text-base sm:text-lg">
                   No {currentCategory} notes found
                 </h3>
               </div>
@@ -188,14 +188,14 @@ const handleKeyDownNote = (e, note) => {
                 onKeyDown={(e) => handleKeyDownNote(e, note)}
                 onClick={(e) => handleUpdate(e, note)}
               key={currentId}
-                  className={`group relative text-left w-full bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
+                  className={`group relative text-left w-full bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
                     note.isPinned
-                      ? "border-l-amber-500 bg-amber-50/20 dark:bg-amber-950/10"
+                      ? "border-l-amber-500 bg-amber-50/20 "
                       : "border-l-blue-500"
                   }`}
                 >
                   <div className="flex justify-between items-start gap-4">
-                    <h3 className="font-semibold line-clamp-1 text-slate-900 dark:text-slate-100 text-base sm:text-lg">
+                    <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
                       {note.title}
                     </h3>
 
@@ -209,8 +209,8 @@ const handleKeyDownNote = (e, note) => {
                         title={note.isPinned ? "Unpin note" : "Pin note"}
                         className={`relative z-20 pointer-events-auto p-1.5 cursor-pointer rounded-lg transition-colors ${
                           note.isPinned
-                            ? "text-amber-500 bg-amber-100/50 dark:bg-amber-900/30 hover:bg-amber-200/50"
-                            : "text-slate-400 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+                            ? "text-amber-500 bg-amber-100/50 hover:bg-amber-200/50"
+                            : "text-slate-400 hover:text-amber-500 hover:bg-slate-100"
                         }`}
                       >
                         <svg
@@ -232,7 +232,7 @@ const handleKeyDownNote = (e, note) => {
                         type="button"
                         onClick={(e) => handleUpdate(e, note)}
                         title="Edit note"
-                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
                       >
                         <svg
                           className="w-4 h-4 pointer-events-none"
@@ -253,7 +253,7 @@ const handleKeyDownNote = (e, note) => {
                         type="button"
                         onClick={(e) => handleDelete(e, currentId)}
                         title="Delete note"
-                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
                       >
                         <svg
                           className="w-4 h-4 pointer-events-none"
@@ -273,7 +273,7 @@ const handleKeyDownNote = (e, note) => {
                   </div>
 
                   <div 
-  className="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-1 prose dark:prose-invert max-w-none"
+  className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
   dangerouslySetInnerHTML={{ 
     __html: DOMPurify.sanitize(note.description || '') 
   }}

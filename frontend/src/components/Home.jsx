@@ -3,16 +3,16 @@ import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronR
 
 export default function Home({ onGetStarted, onSignIn }) {
   return (
-    <div className="min-h-screen overflow-y-auto bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen overflow-y-auto bg-slate-50 text-slate-800 transition-colors">
       
-      <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-50 px-4 md:px-8 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 z-50 px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-2.5 cursor-pointer">
           <img 
             src="/notes.png" 
             alt="StackNotes Logo" 
             className="w-8 h-8 object-contain cursor-pointer drop-shadow-xs"
           />
-         <span className="text-base sm:text-lg font-bold tracking-tight text-[#5B5BFF] dark:text-[#7CAED3]">
+         <span className="text-base sm:text-lg font-bold tracking-tight text-[#5B5BFF]">
   StackNotes
 </span>
         </div>
@@ -37,7 +37,7 @@ export default function Home({ onGetStarted, onSignIn }) {
           <button 
             type="button"
             onClick={onSignIn}
-            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer text-xs sm:text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors"
           >
             Sign In
           </button>
@@ -54,22 +54,22 @@ export default function Home({ onGetStarted, onSignIn }) {
       </nav>
 
       <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto text-center relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 text-xs font-semibold tracking-wide">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-semibold tracking-wide">
   <Sparkles size={14} className="text-blue-500" />
   <span>Next-Gen Workspace for Developer Notes</span>
 </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 max-w-3xl mx-auto leading-tight">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 max-w-3xl mx-auto leading-tight">
             Organize your memory stack with{' '}
             <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
   speed & precision.
 </span>
           </h1>
 
-          <p className="text-base md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-normal">
+          <p className="text-base md:text-xl text-slate-600 max-w-2xl mx-auto font-normal">
             A fast, markdown-ready, and command-driven notebook built to structure your technical thoughts, snippets, and project architecture without friction.
           </p>
 
@@ -84,69 +84,69 @@ export default function Home({ onGetStarted, onSignIn }) {
             </button>
           </div>
 
-          <div className="pt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
+          <div className="pt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
-             <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+             <CheckCircle2 size={16} className="text-blue-600" />
              <span>Instant Command Search</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+              <CheckCircle2 size={16} className="text-blue-600" />
               <span>Pin Important Notes</span>
             </span>
             <span className="flex items-center gap-1.5">
-        <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+        <CheckCircle2 size={16} className="text-blue-600" />
               <span>Organize with Categories</span>
             </span>
           </div>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80">
+      <section className="py-16 px-4 md:px-8 max-w-6xl mx-auto border-t border-slate-200/80">
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
             Engineered for modern workflows
           </h2>
-          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-2">
+          <p className="text-sm md:text-base text-slate-500 mt-2">
             Everything you need to capture, connect, and retrieve your thoughts instantly.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Feature 1 */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200/60  text-blue-600 flex items-center justify-center mb-4">
               <Search size={22} />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">
               Command Palette Search
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-              Use <kbd className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs">Ctrl + K</kbd> to search across all your tags, titles, and note memory in milliseconds.
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Use <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-300 font-mono text-xs">Ctrl + K</kbd> to search across all your tags, titles, and note memory in milliseconds.
             </p>
           </div>
 
           {/* Feature 2 */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200/60  text-blue-600  flex items-center justify-center mb-4">
               <FolderSync size={22} />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">
               Seamless Cloud Sync
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               Keep your local environment and remote workspace automatically updated in real-time with zero manual effort.
             </p>
           </div>
 
           {/* Feature 3 */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-all">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200/60 text-blue-600 flex items-center justify-center mb-4">
               <Tags size={22} />
             </div>
-            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">
               Smart Folders & Tags
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-600 leading-relaxed">
               Organize your technical code blocks and personal updates with nested categories, favorite pins, and custom tags.
             </p>
           </div>
@@ -176,7 +176,7 @@ export default function Home({ onGetStarted, onSignIn }) {
         </div>
       </section>
  {/* Footer stylings*/}
-      <footer className="py-8 border-t border-slate-200/80 dark:border-slate-800/80 text-center text-xs text-slate-500 dark:text-slate-400">
+      <footer className="py-8 border-t border-slate-200/80 text-center text-xs text-slate-500">
         <p>© {new Date().getFullYear()} StackNotes. All rights reserved.</p>
       </footer>
 

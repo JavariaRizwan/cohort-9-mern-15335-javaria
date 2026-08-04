@@ -62,9 +62,9 @@ const SignUp=({ onSuccess })=> {
 
   return (
 
-<div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 dark:bg-slate-900 md:dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
+<div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 text-slate-800 transition-colors">
 
-  <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">        
+  <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">        
 
 
         <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
@@ -114,17 +114,17 @@ const SignUp=({ onSuccess })=> {
 
 
 
-        <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto">
+        <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white overflow-y-auto">
 
           <div className="mb-2">
 
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">
 
               Sign Up
 
             </h2>
 
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] text-slate-500">
 
               Enter your details to create your account
 
@@ -134,9 +134,9 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 text-[11px] font-medium">
+          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200/60 text-blue-700  text-[11px] font-medium">
 
-            <Lock size={12} className="shrink-0 text-blue-600 dark:text-blue-400" />
+            <Lock size={12} className="shrink-0 text-blue-600" />
 
             <span>Your information is safe with us</span>
 
@@ -148,7 +148,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor='username' className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor='username' className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Username
 
@@ -176,7 +176,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your username"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -188,7 +188,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Email Address
 
@@ -216,7 +216,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="name@example.com"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -228,7 +228,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor="password" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="password" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Password
 
@@ -256,7 +256,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your password"
 
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -296,7 +296,7 @@ const SignUp=({ onSuccess })=> {
 
                 onChange={handleChange}
 
-                className="w-3 h-3 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
+                className="w-3 h-3 rounded border-slate-300 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
 
               />
 
@@ -304,7 +304,7 @@ const SignUp=({ onSuccess })=> {
 
                 htmlFor="emailUpdates"
 
-                className="text-[11px] text-slate-600 dark:text-slate-300 cursor-pointer select-none font-medium"
+                className="text-[11px] text-slate-600 cursor-pointer select-none font-medium"
 
               >
 
@@ -335,7 +335,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="mt-3 text-center text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="mt-3 text-center text-[11px] text-slate-500">
 
             Already have an account?{' '}
 
@@ -343,7 +343,7 @@ const SignUp=({ onSuccess })=> {
 
               to="/signin"
 
-              className="text-blue-600 dark:text-blue-400 font-semibold hover:underline cursor-pointer"
+              className="text-blue-600 font-semibold hover:underline cursor-pointer"
 
             >
 

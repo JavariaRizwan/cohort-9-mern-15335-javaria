@@ -11,7 +11,7 @@ const Middle = ({ onLogout }) => {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div className="h-screen flex flex-col bg-slate-100/70 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors overflow-hidden">
+    <div className="h-screen flex flex-col bg-slate-100/70 text-slate-900 transition-colors overflow-hidden">
       <Navbar 
         onToggleSidebar={toggleSidebar} 
         searchQuery={searchQuery} 
