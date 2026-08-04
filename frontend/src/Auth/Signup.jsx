@@ -67,11 +67,11 @@ const SignUp=({ onSuccess })=> {
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">        
 
 
-        <div className="w-full md:w-5/12 bg-gradient-to-br from-teal-600 via-teal-500 to-emerald-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
+        <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-600 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
 
           <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
 
-          <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-emerald-400/20 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
 
 
 
@@ -81,7 +81,7 @@ const SignUp=({ onSuccess })=> {
 
               <img
 
-                src="/sticky-notes.png"
+                src="/notes.png"
 
                 alt="StackNotes Logo"
 
@@ -93,7 +93,7 @@ const SignUp=({ onSuccess })=> {
 
             <h1 className="text-xl font-extrabold tracking-tight">StackNotes</h1>
 
-            <p className="text-teal-100/90 text-[11px] mt-0.5 font-medium leading-snug">
+            <p className="text-blue-100/90 text-[11px] mt-0.5 font-medium leading-snug">
 
               Start building your personal knowledge memory stack.
 
@@ -103,7 +103,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="relative z-10 text-center md:text-left text-[11px] text-teal-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
+          <div className="relative z-10 text-center md:text-left text-[11px] text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
 
             <p>Join StackNotes today.</p>
 
@@ -134,9 +134,9 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/40 border border-teal-200/60 dark:border-teal-800/60 text-teal-700 dark:text-teal-300 text-[11px] font-medium">
+          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 text-[11px] font-medium">
 
-            <Lock size={12} className="shrink-0 text-teal-600 dark:text-teal-400" />
+            <Lock size={12} className="shrink-0 text-blue-600 dark:text-blue-400" />
 
             <span>Your information is safe with us</span>
 
@@ -176,7 +176,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your username"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -216,7 +216,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="name@example.com"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -256,7 +256,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your password"
 
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
 
                 />
 
@@ -296,7 +296,7 @@ const SignUp=({ onSuccess })=> {
 
                 onChange={handleChange}
 
-                className="w-3 h-3 rounded border-slate-300 dark:border-slate-700 text-teal-600 focus:ring-teal-500 accent-teal-600 cursor-pointer"
+                className="w-3 h-3 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 accent-blue-600 cursor-pointer"
 
               />
 
@@ -320,7 +320,7 @@ const SignUp=({ onSuccess })=> {
 
               type="submit"
 
-              className="w-full mt-1 py-2 px-3 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group cursor-pointer"
+              className="w-full mt-1 py-2 px-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group cursor-pointer"
 
             >
 
@@ -343,7 +343,7 @@ const SignUp=({ onSuccess })=> {
 
               to="/signin"
 
-              className="text-teal-600 dark:text-teal-400 font-semibold hover:underline cursor-pointer"
+              className="text-blue-600 dark:text-blue-400 font-semibold hover:underline cursor-pointer"
 
             >
 
