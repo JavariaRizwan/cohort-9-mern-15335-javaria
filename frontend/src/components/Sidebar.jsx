@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { BookOpen, Folder, Star, Trash2, LogOut } from 'lucide-react';
 import CreateNote from './NotesPages/CreateNote';
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen, onLogout, activeCategory, setActiveCategory, onSaveNote }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, onLogout, activeCategory, setActiveCategory }) => {
 
 const [isModelOpen, setIsModelOpen]=useState(false);
 
@@ -38,20 +38,18 @@ const handleNavClick = (category) => {
 
 <>
 
-    {/* <aside
-
-className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
-  sidebarOpen 
-    ? 'translate-x-0' 
-    : '-translate-x-full md:-translate-x-full'
-}`}
-    > */}
     <aside
-      className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
-        sidebarOpen 
-          ? 'translate-x-0' 
-          : '-translate-x-full md:-translate-x-full'
-      }`}
+inert={!sidebarOpen ? "" : undefined}
+// className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
+//         sidebarOpen 
+//           ? 'translate-x-0' 
+//           : '-translate-x-full md:-translate-x-full'
+//       }`}
+className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
+    sidebarOpen 
+      ? 'translate-x-0' 
+      : '-translate-x-full md:-translate-x-full'
+  }`}
     >
       <div className="space-y-6">
         <div>
@@ -156,7 +154,6 @@ onClick={() => handleNavClick('all')}
 <CreateNote 
 isOpen={isModelOpen}
 onClose={()=>{setIsModelOpen(false)}}
-onSaveNote={onSaveNote}
 />
 
 </>

@@ -70,7 +70,8 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             const response = await method(url, { ...formData, description: content }, { withCredentials: true });
 
             if (response.data.success) {
-                onSaveNote(response.data.note);
+        //        onSaveNote(response.data.note);
+              onSaveNote?.(response.data.note); 
                 toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
                 onClose();
             } else {
@@ -102,7 +103,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
                     </button>
                     <button type="submit" form="create-note-form" 
                     disabled={isSubmitting || !formData.title.trim()}
-                     className="flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl disabled:opacity-40">
+                     className="flex items-center cursor-pointer gap-2 px-5 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl disabled:opacity-40">
                         <Check className="w-4 h-4" />
                         <span>{isSubmitting ? 'Saving...' : 'Save Note'}</span>
                     </button>
