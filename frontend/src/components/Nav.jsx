@@ -87,6 +87,8 @@ useEffect(() => {
           <input
             autoFocus
             type="text"
+            value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)} 
             placeholder="Search notes..."
             className="w-full bg-transparent text-sm outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400"
           />

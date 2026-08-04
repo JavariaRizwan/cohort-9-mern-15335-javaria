@@ -11,6 +11,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
     const [formData, setFormData] = useState({ title: '', description: '', category: '', subCategory: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
        const config = useMemo(() => ({
         readonly: false,
@@ -55,9 +56,10 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(isSubmitting) return;
         if (!formData.title.trim()) 
             return toast.error("Please add a title for your note.");
-
+        setIsSubmitting(true);
         try {
             const noteId = isEditingNote?._id;
             const url = isEditingNote 
@@ -76,6 +78,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             }
         } catch (error) {
             toast.error(error.message || "Failed to save Note!");
+            setIsSubmitting(false);
         }
     };
 
@@ -98,10 +101,10 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
                         Cancel
                     </button>
                     <button type="submit" form="create-note-form" 
-                    disabled={!formData.title.trim()}
+                    disabled={isSubmitting || !formData.title.trim()}
                      className="flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl disabled:opacity-40">
                         <Check className="w-4 h-4" />
-                        <span>Save Note</span>
+                        <span>{isSubmitting ? 'Saving...' : 'Save Note'}</span>
                     </button>
                 </div>
             </header>

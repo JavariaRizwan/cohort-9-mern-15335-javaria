@@ -8,6 +8,11 @@ const Middle = ({ onLogout }) => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery]=useState('')
 
+  const [notes, setNotes] = useState([]);
+
+  const handleSaveNote = (newNote) => {
+    setNotes((prevNotes) => [newNote, ...prevNotes]);
+  };
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
@@ -28,14 +33,17 @@ const Middle = ({ onLogout }) => {
 
   <Sidebar 
     sidebarOpen={sidebarOpen}
+    setSidebarOpen={setSidebarOpen}
     activeCategory={activeCategory} 
     setActiveCategory={setActiveCategory}
-    onLogout={onLogout} 
+    onLogout={onLogout}
+    onSaveNote={handleSaveNote}
   />
 
   <div className={`flex-1 overflow-y-auto w-full transition-all duration-300 ease-in-out ${sidebarOpen ? 'md:ml-0' : 'md:-ml-64'}`}>
   <MainBody activeCategory={activeCategory} 
   searchQuery={searchQuery}
+  notes={notes}
   />
 </div>
 </div>

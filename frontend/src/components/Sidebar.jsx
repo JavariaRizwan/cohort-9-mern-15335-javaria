@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { BookOpen, Folder, Star, Trash2, LogOut } from 'lucide-react';
 import CreateNote from './NotesPages/CreateNote';
 
-const Sidebar = ({ sidebarOpen, onLogout, activeCategory, setActiveCategory }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, onLogout, activeCategory, setActiveCategory, onSaveNote }) => {
 
 const [isModelOpen, setIsModelOpen]=useState(false);
 
@@ -25,7 +25,12 @@ const handleLogout=async()=>{
   }
 }
 
-
+const handleNavClick = (category) => {
+  setActiveCategory(category);
+  if (window.innerWidth < 768) {
+    setSidebarOpen(false);
+  }
+};
 
 
 
@@ -33,13 +38,20 @@ const handleLogout=async()=>{
 
 <>
 
-    <aside
+    {/* <aside
 
 className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
   sidebarOpen 
     ? 'translate-x-0' 
     : '-translate-x-full md:-translate-x-full'
 }`}
+    > */}
+    <aside
+      className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
+        sidebarOpen 
+          ? 'translate-x-0' 
+          : '-translate-x-full md:-translate-x-full'
+      }`}
     >
       <div className="space-y-6">
         <div>
@@ -48,7 +60,13 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
           </p>
           <nav className="space-y-1">
 
-             <button onClick={()=>setIsModelOpen(true)}
+             <button 
+             onClick={() => {
+    setIsModelOpen(true);
+    if (window.innerWidth < 768 && setSidebarOpen) {
+      setSidebarOpen(false);
+    }
+  }}
   type="button"
   className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-sm px-3 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
 >
@@ -65,7 +83,7 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
 </button>
 
             <button
-            onClick={() => setActiveCategory('all')} 
+onClick={() => handleNavClick('all')} 
             type="button"
             className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
     !activeCategory || activeCategory === 'all'
@@ -76,7 +94,7 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
               All Notes
             </button>
             <button
-            onClick={() => setActiveCategory('pinned')}
+            onClick={() => handleNavClick('pinned')}
             type="button" 
             className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
     activeCategory === 'pinned'
@@ -87,7 +105,7 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
               Pinned
             </button>
             <button
-            onClick={() => setActiveCategory('archived')}
+            onClick={() => handleNavClick('archived')}
             type="button" className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
     activeCategory === 'archived'
       ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
@@ -111,7 +129,7 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
           </p>
           <nav className="space-y-1">
             <button
-              onClick={() => setActiveCategory('trash')}
+              onClick={() => handleNavClick('trash')}
               type="button" className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
     activeCategory === 'trash'
       ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'
@@ -138,7 +156,7 @@ className={`sticky top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 da
 <CreateNote 
 isOpen={isModelOpen}
 onClose={()=>{setIsModelOpen(false)}}
-onSaveNote={(newNote)=>setNotes([newNote, ...notes])}
+onSaveNote={onSaveNote}
 />
 
 </>
