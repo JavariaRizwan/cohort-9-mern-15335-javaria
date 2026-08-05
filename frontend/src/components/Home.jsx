@@ -3,51 +3,70 @@ import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronR
 
 export default function Home({ onGetStarted, onSignIn }) {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen overflow-y-auto bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       
       <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 z-50 px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-2.5 cursor-pointer">
           <img 
-            src="/sticky-notes.png" 
+            src="/notes.png" 
             alt="StackNotes Logo" 
             className="w-8 h-8 object-contain cursor-pointer drop-shadow-xs"
           />
-          <span className="text-xl cursor-pointer font-extrabold tracking-tight bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
-            StackNotes
-          </span>
+         <span className="text-base sm:text-lg font-bold tracking-tight text-[#5B5BFF] dark:text-[#7CAED3]">
+  StackNotes
+</span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
+        {/* <div className="flex items-center gap-3">
+          <button type="button"
             onClick={onSignIn}
-            className="px-4 py-2 cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+            className="px-4 py-2 cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
             Sign In
           </button>
           <button
+          type="button"
             onClick={onGetStarted}
-            className="px-4 cursor-pointer py-2 text-sm font-semibold text-white bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
+           className="px-4 cursor-pointer group py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
           >
             <span className='cursor-pointer'>Let's get Started</span>
             <ChevronRight size={16}  />
           </button>
+        </div> */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button 
+            type="button"
+            onClick={onSignIn}
+            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            onClick={onGetStarted}
+            className="px-3 py-1.5 sm:px-4 sm:py-2 cursor-pointer group text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1"
+          >
+            <span>Get Started</span>
+            <ChevronRight size={14} className="sm:w-4 sm:h-4" />
+          </button>
         </div>
+        
       </nav>
 
       <section className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto text-center relative overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-teal-500/10 dark:bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-800/80 text-teal-700 dark:text-teal-300 text-xs font-semibold tracking-wide">
-            <Sparkles size={14} className="text-teal-500" />
-            <span>Next-Gen Workspace for Developer Notes</span>
-          </div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 text-xs font-semibold tracking-wide">
+  <Sparkles size={14} className="text-blue-500" />
+  <span>Next-Gen Workspace for Developer Notes</span>
+</div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 max-w-3xl mx-auto leading-tight">
             Organize your memory stack with{' '}
-            <span className="bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
-              speed & precision.
-            </span>
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+  speed & precision.
+</span>
           </h1>
 
           <p className="text-base md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-normal">
@@ -56,8 +75,9 @@ export default function Home({ onGetStarted, onSignIn }) {
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
+            type="button"
               onClick={onGetStarted}
-              className="w-full sm:w-auto px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 hover:from-teal-500 hover:to-emerald-400 rounded-2xl shadow-lg hover:shadow-teal-500/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 group"
+              className="px-4 cursor-pointer py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
             >
               <span className='cursor-pointer'>Let's get Started</span>
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -66,13 +86,16 @@ export default function Home({ onGetStarted, onSignIn }) {
 
           <div className="pt-8 flex flex-wrap justify-center items-center gap-6 text-xs text-slate-500 dark:text-slate-400 font-medium">
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-teal-500" /> Free Cloud Synchronization
+             <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+             <span>Instant Command Search</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-teal-500" /> Instant Command Search
+              <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+              <span>Pin Important Notes</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-teal-500" /> Dark & Light Mode Theme
+        <CheckCircle2 size={16} className="text-blue-600 dark:text-blue-400" />
+              <span>Organize with Categories</span>
             </span>
           </div>
         </div>
@@ -91,7 +114,7 @@ export default function Home({ onGetStarted, onSignIn }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Feature 1 */}
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200/60 dark:border-teal-800/60 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
               <Search size={22} />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
@@ -104,7 +127,7 @@ export default function Home({ onGetStarted, onSignIn }) {
 
           {/* Feature 2 */}
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200/60 dark:border-teal-800/60 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
               <FolderSync size={22} />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
@@ -117,7 +140,7 @@ export default function Home({ onGetStarted, onSignIn }) {
 
           {/* Feature 3 */}
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md transition-all">
-            <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200/60 dark:border-teal-800/60 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-800/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4">
               <Tags size={22} />
             </div>
             <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">
@@ -131,18 +154,19 @@ export default function Home({ onGetStarted, onSignIn }) {
       </section>
 
       <section className="py-16 px-4 md:px-8 max-w-5xl mx-auto my-12">
-        <div className="rounded-3xl bg-gradient-to-r from-teal-600 via-teal-500 to-emerald-500 p-8 md:p-12 text-white text-center shadow-xl relative overflow-hidden">
+        <div className="rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-8 md:p-12 text-white text-center shadow-xl relative overflow-hidden">
           <div className="relative z-10 space-y-4">
             <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
               Ready to elevate your note-taking experience?
             </h2>
-            <p className="text-teal-100 text-sm md:text-base max-w-xl mx-auto">
+            <p className="text-blue-100 text-sm md:text-base max-w-xl mx-auto">
               Join StackNotes today and keep your workspace structured, accessible, and synchronized across all device screens.
             </p>
             <div className="pt-2 cursor-pointer">
               <button
+              type="button"
                 onClick={onGetStarted}
-                className="px-8 cursor-pointer py-3.5 text-sm font-bold text-teal-900 bg-white hover:bg-slate-100 rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+                className="px-8 cursor-pointer py-3.5 text-sm font-bold text-blue-900 bg-white hover:bg-slate-100 rounded-xl shadow-md transition-all inline-flex items-center gap-2"
               >
                 <span className='cursor-pointer'>Let's get Started</span>
                 <ArrowRight size={16} />

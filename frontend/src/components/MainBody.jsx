@@ -10,12 +10,17 @@ import sortingOptions from '../data/sortingOptions';
 
 
 
-const MainBody = ({ activeCategory }) => {
+const MainBody = ({ activeCategory, searchQuery }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("date-desc");
   const [isEditingNote, setIsEditingNote]=useState(null)
+
   
+
+  const currentCategory=activeCategory || "all" ;
+
+
   const getAllNotes = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/user-notes', {
@@ -49,11 +54,22 @@ const handleOpenCreateModal = () => {
 
 
 const filteredNotes = notes.filter((note) => {
-    if (activeCategory === "trash") return note.isDeleted;
-    if (note.isDeleted) return false; // if the note is dleetd donot show it on the main body page
-    if (!activeCategory || activeCategory === "all") return true;
-    if (activeCategory === "pinned") return note.isPinned;
-    return note.category === activeCategory;  
+  
+  if (note.isDeleted && currentCategory !== "trash") {
+    return false;
+  }
+
+  const query=searchQuery?.toLowerCase().trim() || '';
+  const matchingSearch= query === '' ||
+  note.title?.toLowerCase().includes(query) || note.description?.toLowerCase().includes(query)
+  || note.category?.toLowerCase().includes(query) || note.subCategory?.toLowerCase().includes(query);
+
+  if (currentCategory === "pinned"){return (note.isPinned && matchingSearch)};
+  if (!currentCategory || currentCategory === "all"){ return matchingSearch;}
+  if(note.isDeleted && currentCategory === "trash"){ return note.isDeleted && matchingSearch;}  
+  if(note.isArchived && currentCategory === "archived"){ return note.isArchived && matchingSearch;}  
+    
+    return note.category === currentCategory && matchingSearch;  
   });
 
   const sortedNotes = [...filteredNotes].sort((a, b) => {
@@ -69,10 +85,18 @@ const filteredNotes = notes.filter((note) => {
     setIsEditingNote(null);
   };
 
+
+const handleKeyDownNote = (e, note) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleUpdate(e, note);
+    }
+  };
+
   const handlePin = async (e, noteId) => {
     e.stopPropagation();
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         `http://localhost:5000/api/pin-note/${noteId}`,
         {},
         { withCredentials: true }
@@ -128,7 +152,7 @@ const filteredNotes = notes.filter((note) => {
           <button
             type="button"
             onClick={handleOpenCreateModal}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-500 hover:from-teal-700 hover:to-emerald-600 text-white font-medium text-xs sm:text-sm px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer shrink-0"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-xs sm:text-sm px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer shrink-0"
           >
             <svg
               className="w-4 h-4"
@@ -148,10 +172,10 @@ const filteredNotes = notes.filter((note) => {
 
         <div className="space-y-3">
           {sortedNotes.length === 0 ? (
-            <div className="bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-teal-500">
+            <div className="bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
               <div className="flex justify-between items-start">
                 <h3 className="font-semibold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
-                  No notes found
+                  No {currentCategory} notes found
                 </h3>
               </div>
             </div>
@@ -159,7 +183,7 @@ const filteredNotes = notes.filter((note) => {
             sortedNotes.map((note) => {
               const currentId = note._id || note.id;
               return (
-                <button
+                <div role="button"
                 tabIndex={0}
                 onKeyDown={(e) => handleKeyDownNote(e, note)}
                 onClick={(e) => handleUpdate(e, note)}
@@ -167,7 +191,7 @@ const filteredNotes = notes.filter((note) => {
                   className={`group relative text-left w-full bg-white cursor-pointer dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
                     note.isPinned
                       ? "border-l-amber-500 bg-amber-50/20 dark:bg-amber-950/10"
-                      : "border-l-teal-500"
+                      : "border-l-blue-500"
                   }`}
                 >
                   <div className="flex justify-between items-start gap-4">
@@ -208,7 +232,7 @@ const filteredNotes = notes.filter((note) => {
                         type="button"
                         onClick={(e) => handleUpdate(e, note)}
                         title="Edit note"
-                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-teal-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                       >
                         <svg
                           className="w-4 h-4 pointer-events-none"
@@ -254,7 +278,7 @@ const filteredNotes = notes.filter((note) => {
     __html: DOMPurify.sanitize(note.description || '') 
   }}
 />
-                </button>
+                </div>
               );
             })
           )}
