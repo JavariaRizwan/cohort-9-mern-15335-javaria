@@ -373,7 +373,7 @@ const existingNote = await Notes.findOne({ _id: noteId, userId: currentUserId, i
      const willArchive = !existingNote.isArchived;
 
     const note = await Notes.findOneAndUpdate(
-      { _id: noteId, userId: currentUserId, isDeleted: false },
+      { _id: noteId, userId: currentUserId, isDeleted: false, isArchived: existingNote.isArchived  },
       { $set: { 
           isArchived: willArchive, 
           isPinned: willArchive ? false : existingNote.isPinned
