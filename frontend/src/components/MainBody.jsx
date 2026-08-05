@@ -10,6 +10,231 @@ import sortingOptions from '../data/sortingOptions';
 
 
 
+
+
+const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
+  const { handleDelete, openDeletePopup, handleArchive, handlePin, handleUpdate } = buttonHandlers;
+
+  switch(currentCategory){
+    case "trash":
+      return (
+        <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+
+
+                          <button
+                            type="button"
+                            onClick={(e) => handleDelete(e, currentId)}
+                            title="Restore note"
+                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-blue-500 hover:bg-blue-100  transition-colors"
+                          >
+                            <svg
+                              className="w-4 h-4 pointer-events-none"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                              />
+                            </svg>
+
+                          </button>
+
+
+                        
+                        <button
+                          type="button"
+                          onClick={(e) => openDeletePopup(e, currentId)}
+                          title="Delete note"
+                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+                        >
+                          <svg
+                            className="w-4 h-4 pointer-events-none"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                            />
+                          </svg>
+                        </button>
+
+                      </div>
+
+      )
+
+      case "archived":
+        return (
+          <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+
+
+                          <button
+                            type="button"
+                            onClick={(e) => handleArchive(e, currentId)}
+                            title="Un Archive note"
+                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
+                          >
+                  <svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  viewBox="0 0 24 24" 
+  width="24" 
+  height="24" 
+  fill="none" 
+  stroke="currentColor" 
+  strokeWidth="2" 
+  strokeLinecap="round" 
+  strokeLinejoin="round"
+>
+  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+  <path d="M12 15V9" />
+  <path d="m9 12 3-3 3 3" />
+</svg>
+
+                          </button>
+
+
+
+                          <button
+                            type="button"
+                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
+                            onClick={(e) => handleDelete(e, currentId)}
+                            title="Delete note"
+                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+                          >
+                            <svg
+                              className="w-4 h-4 pointer-events-none"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+        )
+
+        default:
+          return (
+                                  <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+
+  <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handlePin(e, currentId);
+                          }}
+                          title={note.isPinned ? "Unpin note" : "Pin note"}
+                          className={`relative z-20 pointer-events-auto p-1.5 cursor-pointer rounded-lg transition-colors ${note.isPinned
+                              ? "text-amber-500 bg-amber-100/50 hover:bg-amber-200/50"
+                              : "text-slate-400 hover:text-amber-500 hover:bg-slate-100"
+                            }`}
+                        >
+                          <svg
+                            className="w-4 h-4 pointer-events-none"
+                            fill={note.isPinned ? "currentColor" : "none"}
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                            />
+                          </svg>
+                        </button>
+
+
+                        <button
+                          type="button"
+                          onClick={(e) => handleArchive(e, currentId)}
+                          title="Archive note"
+                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
+                        >
+                          <svg
+                            className="w-4 h-4 pointer-events-none"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M21 8v13H3V8M1 3h22v5H1V3zm10 9h4"
+                            />
+                          </svg>
+
+                        </button>
+
+
+                        <button
+                          type="button"
+                          onClick={(e) => handleUpdate(e, note)}
+                          title="Edit note"
+                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
+                        >
+                          <svg
+                            className="w-4 h-4 pointer-events-none"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"
+                            />
+                          </svg>
+                        </button>
+
+
+                          <button
+                            type="button"
+                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
+                            onClick={(e) => handleDelete(e, currentId)}
+                            title="Delete note"
+                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+                          >
+                            <svg
+                              className="w-4 h-4 pointer-events-none"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                              />
+                            </svg>
+                          </button>
+
+</div>
+
+          )
+
+
+  }
+}
+
+
+
+
 const MainBody = ({ activeCategory, searchQuery }) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [notes, setNotes] = useState([]);
@@ -241,218 +466,15 @@ const MainBody = ({ activeCategory, searchQuery }) => {
                       {note.title}
                     </h3>
 
+                   
 
-                    {currentCategory === "trash" ?  (
-                      <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
-
-
-                          <button
-                            type="button"
-                            onClick={(e) => handleDelete(e, currentId)}
-                            title="Restore note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-blue-500 hover:bg-blue-100  transition-colors"
-                          >
-                            <svg
-                              className="w-4 h-4 pointer-events-none"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                              />
-                            </svg>
-
-                          </button>
-
-
-                        
-                        <button
-                          type="button"
-                          onClick={(e) => openDeletePopup(e, currentId)}
-                          title="Delete note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
-                        >
-                          <svg
-                            className="w-4 h-4 pointer-events-none"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                          </svg>
-                        </button>
-
-                      </div>
-
-                    )
-                      :
-
-                      currentCategory === 'archived' ?
-(
-                        <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
-
-
-                          <button
-                            type="button"
-                            onClick={(e) => handleArchive(e, currentId)}
-                            title="Un Archive note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
-                          >
-                  <svg 
-  xmlns="http://www.w3.org/2000/svg" 
-  viewBox="0 0 24 24" 
-  width="24" 
-  height="24" 
-  fill="none" 
-  stroke="currentColor" 
-  strokeWidth="2" 
-  strokeLinecap="round" 
-  strokeLinejoin="round"
->
-  <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-  <path d="M12 15V9" />
-  <path d="m9 12 3-3 3 3" />
-</svg>
-
-                          </button>
-
-
-
-                          <button
-                            type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
-                            onClick={(e) => handleDelete(e, currentId)}
-                            title="Delete note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
-                          >
-                            <svg
-                              className="w-4 h-4 pointer-events-none"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-)
-                        :
-
-                        (
-                      <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
-
-  <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handlePin(e, currentId);
-                          }}
-                          title={note.isPinned ? "Unpin note" : "Pin note"}
-                          className={`relative z-20 pointer-events-auto p-1.5 cursor-pointer rounded-lg transition-colors ${note.isPinned
-                              ? "text-amber-500 bg-amber-100/50 hover:bg-amber-200/50"
-                              : "text-slate-400 hover:text-amber-500 hover:bg-slate-100"
-                            }`}
-                        >
-                          <svg
-                            className="w-4 h-4 pointer-events-none"
-                            fill={note.isPinned ? "currentColor" : "none"}
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                            />
-                          </svg>
-                        </button>
-
-
-                        <button
-                          type="button"
-                          onClick={(e) => handleArchive(e, currentId)}
-                          title="Archive note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
-                        >
-                          <svg
-                            className="w-4 h-4 pointer-events-none"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8v13H3V8M1 3h22v5H1V3zm10 9h4"
-                            />
-                          </svg>
-
-                        </button>
-
-
-                        <button
-                          type="button"
-                          onClick={(e) => handleUpdate(e, note)}
-                          title="Edit note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
-                        >
-                          <svg
-                            className="w-4 h-4 pointer-events-none"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"
-                            />
-                          </svg>
-                        </button>
-
-
-                          <button
-                            type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
-                            onClick={(e) => handleDelete(e, currentId)}
-                            title="Delete note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
-                          >
-                            <svg
-                              className="w-4 h-4 pointer-events-none"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>
-
-</div>
-                        )
-}
+{getNoteActionButtons(currentCategory, note, currentId, {
+  handleDelete,
+  openDeletePopup,
+  handleArchive,
+  handlePin,
+  handleUpdate
+})}
 
                   </div>
 
