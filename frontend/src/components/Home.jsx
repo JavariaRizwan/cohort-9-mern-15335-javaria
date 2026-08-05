@@ -1,7 +1,10 @@
-import React from 'react';
+import {React} from 'react';
 import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronRight } from 'lucide-react';
 
 export default function Home({ onGetStarted, onSignIn }) {
+
+
+
   return (
     <div className="min-h-screen overflow-y-auto bg-slate-50 text-slate-800 transition-colors">
       
@@ -17,22 +20,6 @@ export default function Home({ onGetStarted, onSignIn }) {
 </span>
         </div>
 
-        {/* <div className="flex items-center gap-3">
-          <button type="button"
-            onClick={onSignIn}
-            className="px-4 py-2 cursor-pointer text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-          >
-            Sign In
-          </button>
-          <button
-          type="button"
-            onClick={onGetStarted}
-           className="px-4 cursor-pointer group py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl shadow-xs hover:shadow-md transition-all flex items-center gap-1.5"
-          >
-            <span className='cursor-pointer'>Let's get Started</span>
-            <ChevronRight size={16}  />
-          </button>
-        </div> */}
         <div className="flex items-center gap-2 sm:gap-3">
           <button 
             type="button"

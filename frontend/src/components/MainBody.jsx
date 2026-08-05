@@ -40,6 +40,20 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   }, []);
 
 
+const openDeletePopup = (e, noteId) => {
+  e.stopPropagation();
+  const popup = document.getElementById('delete-confirmation');
+  popup.dataset.noteId=noteId; 
+  popup.classList.remove('hidden'); 
+};
+
+const closeDeletePopup = () => {
+  const popup = document.getElementById('delete-confirmation');
+  popup.classList.add('hidden');
+  delete popup.dataset.noteId;
+};
+
+
 
 
 const handleOpenCreateModal = () => {
@@ -92,6 +106,41 @@ const handleKeyDownNote = (e, note) => {
       handleUpdate(e, note);
     }
   };
+
+
+const handleArchive=async(e, noteId)=>{
+  e.stopPropagation();
+try{
+  const response= await axios.put(`http://localhost:5000/api/archive-note/${noteId}`, {}, {withCredentials:true});
+  if(response.data?.success){
+    toast.success(response.data.message || "Note archived successfully");
+    getAllNotes();
+  }
+}
+
+catch(error){
+  toast.error("Failed to archive note");
+  console.error("Error while archiving the note", error.message);
+}
+}
+
+
+const handlePermanentDelete=async(e, noteId)=>{
+  e.stopPropagation();
+  try {
+    const response = await axios.delete(`http://localhost:5000/api/permanent-delete/${noteId}`, {withCredentials:true});
+    if(response.data?.success){
+      toast.success(`Note ${noteId} deleted successfully`);
+      getAllNotes();
+    }
+
+  } catch (error) {
+    toast.error("Error happened while deleting");
+    console.error(error.message);
+  }
+}
+
+
 
   const handlePin = async (e, noteId) => {
     e.stopPropagation();
@@ -199,8 +248,10 @@ const handleKeyDownNote = (e, note) => {
                       {note.title}
                     </h3>
 
-                    <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
-                      <button
+                    
+                  {currentCategory !=="trash" ? 
+                  <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+                  <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
@@ -227,6 +278,30 @@ const handleKeyDownNote = (e, note) => {
                           />
                         </svg>
                       </button>
+
+
+<button
+                        type="button"
+                        onClick={(e) => handleArchive(e, currentId)}
+                        title="Archive note"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
+                      >
+                        <svg
+  className="w-4 h-4 pointer-events-none"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  strokeWidth="2"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M21 8v13H3V8M1 3h22v5H1V3zm10 9h4"
+  />
+</svg>
+
+                      </button>
+
 
                       <button
                         type="button"
@@ -269,8 +344,62 @@ const handleKeyDownNote = (e, note) => {
                           />
                         </svg>
                       </button>
-                    </div>
+
                   </div>
+
+
+                       :
+
+                  <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
+
+                  <button
+                                  type="button"
+                        onClick={(e) => handleDelete(e, currentId)}
+                        title="Restore note"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-blue-500 hover:bg-blue-100  transition-colors"
+                      >
+                       <svg
+  className="w-4 h-4 pointer-events-none"
+  fill="none"
+  stroke="currentColor"
+  viewBox="0 0 24 24"
+  strokeWidth="2"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+  />
+</svg>
+
+                      </button>
+
+
+                       <button
+                        type="button"
+                      //  onClick={(e) => handlePermanentDelete(e, currentId)}
+                      onClick={(e)=>openDeletePopup(e, currentId)}  
+                      title="Delete note"
+                        className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+                      >
+                        <svg
+                          className="w-4 h-4 pointer-events-none"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </button>
+</div>
+                         }
+                      
+                    </div>
 
                   <div 
   className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
@@ -291,6 +420,39 @@ const handleKeyDownNote = (e, note) => {
         onSaveNote={handleSaveNote}
         isEditingNote={isEditingNote}
       />
+
+
+<div id="delete-confirmation" className="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+    <p className="text-lg font-bold mb-2">⚠️ Warning</p>
+    <p className="text-sm text-gray-600 mb-4">Do you really want to delete it? It will be permanent and you can't recover it.</p>
+    <div className="flex justify-end gap-2">
+      <button 
+        type="button"
+        onClick={closeDeletePopup}
+        className="px-4 py-2 bg-gray-200 rounded text-sm cursor-pointer"
+      >
+        Cancel
+      </button>
+      <button 
+        type="button"
+        onClick={(e) => {
+          const popup = document.getElementById('delete-confirmation');
+          const noteId = popup.dataset.noteId;
+          if (noteId) {
+            handlePermanentDelete(e, noteId);
+          }
+          closeDeletePopup();
+        }}
+        className="px-4 py-2 bg-red-600 text-white rounded text-sm cursor-pointer"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+
     </>
   );
 };

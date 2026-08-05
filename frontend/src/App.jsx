@@ -1,6 +1,9 @@
-import {React} from 'react';
+import {React, useEffect} from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
+import axios from 'axios';
+
+
 
 import Home from './components/Home';
 import SignUp from './Auth/SignUp';
@@ -15,6 +18,25 @@ import UserProfile from './components/UserProfile';
 
 const App = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkExistingSession = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/user-notes', {
+          withCredentials: true,
+        });
+
+        if (response.data.success) {
+          navigate('/user_dashboard');
+        }
+      } catch (error) {
+        console.error("No active session found", error.message);
+      }
+    };
+
+    checkExistingSession();
+  }, [navigate]);
+
 
 
 
@@ -63,13 +85,15 @@ const App = () => {
           path="/user_dashboard" 
           element={<Middle onLogout={handleLogout} />} 
         />
-        </Route>
+        
          <Route path='/user-profile' element={<UserProfile />} />
-        <Route 
+        
+        </Route>
+      <Route 
           path="*" 
           element={<NotFound />} 
         />
-        
+      
       </Routes>
     </>
   );
