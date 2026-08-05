@@ -1,4 +1,4 @@
-import React from 'react';
+import {React} from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Toaster, toast } from 'react-hot-toast';
 
@@ -9,10 +9,20 @@ import Middle from './components/Middle';
 import NotFound from './components/NotFound';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import UserProfile from './components/UserProfile';
+// import SplashScreen from './components/SplashScreen';
+
 
 
 const App = () => {
   const navigate = useNavigate();
+
+
+
+// const [showSplash, setShowSplash] = useState(true);
+
+//   if (showSplash) {
+//     return <SplashScreen onFinish={() => setShowSplash(false)} />;
+//   }
 
   const handleLoginSuccess = () => {
     toast.success('Successfully logged in!');
