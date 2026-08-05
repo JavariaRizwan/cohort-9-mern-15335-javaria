@@ -2,6 +2,7 @@ const User=require("../schemas/userSchema");
 const {hashFunction}= require("./utils");
 const bcrypt=require("bcryptjs");
 const jwt=require("jsonwebtoken");
+const logger=require("../src/config/logger");
 require('dotenv').config();
 const Notes=require("../schemas/noteSchema")
 
