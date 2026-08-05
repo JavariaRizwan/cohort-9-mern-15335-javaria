@@ -1,4 +1,4 @@
-import {React} from 'react';
+import React from 'react';
 import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronRight } from 'lucide-react';
 
 export default function Home({ onGetStarted, onSignIn }) {

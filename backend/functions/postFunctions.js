@@ -207,7 +207,8 @@ const changePinStatus = async (req, res) => {
 
     const note = await Notes.findOne({ 
       _id: noteId, 
-      userId: currentUserId 
+      userId: currentUserId,
+      isDeleted: false 
     });
 
     if (!note) {
@@ -287,7 +288,7 @@ const handlPermanentDelete=async(req, res)=>{
   const userId=req.user?.userId;
   try {
     
-    const note=await Notes.findOneAndDelete({_id: noteId, userId:userId});
+    const note=await Notes.findOneAndDelete({_id: noteId, userId:userId, isDeleted: true});
     if(!note){
       return res.status(404).json({
         success:false,
@@ -326,7 +327,7 @@ const editNote=async(req, res)=>{
  }
   try {
     
-    const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId}, {
+    const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId, isDeleted: false}, {
       title: title,
       description:description
     },
@@ -363,23 +364,31 @@ try{
       message:"User not found"
     })
   }
-const note=await Notes.findOneAndUpdate({_id: noteId, userId:currentUserId},
-  {$set:{
-    isArchived:true,
-    isPinned:false
-  }},
-{
-  new:true
-}
-)
+
+const existingNote = await Notes.findOne({ _id: noteId, userId: currentUserId, isDeleted: false });
+
+    if (!existingNote) {
+      return res.status(404).json({ success: false, message: "Note not found" });
+    }
+     const willArchive = !existingNote.isArchived;
+
+    const note = await Notes.findOneAndUpdate(
+      { _id: noteId, userId: currentUserId, isDeleted: false },
+      { $set: { 
+          isArchived: willArchive, 
+          isPinned: willArchive ? false : existingNote.isPinned
+        } 
+      },
+      { new: true }
+    );
 if(!note){
   return res.status(404).json({success:false, message:"Note not found"})
 }
 
-await note.save();
+
 return res.status(200).json({
   success:true,
-  message:"Note archived successfully",
+  message:`Note ${willArchive ? "archived" : "unarchived"} successfully`,
   note:note
 
 })
