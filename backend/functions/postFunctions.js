@@ -2,6 +2,7 @@ const User=require("../schemas/userSchema");
 const {hashFunction}= require("./utils");
 const bcrypt=require("bcryptjs");
 const jwt=require("jsonwebtoken");
+const logger=require("../src/config/logger");
 require('dotenv').config();
 const Notes=require("../schemas/noteSchema")
 
@@ -206,7 +207,8 @@ const changePinStatus = async (req, res) => {
 
     const note = await Notes.findOne({ 
       _id: noteId, 
-      userId: currentUserId 
+      userId: currentUserId,
+      isDeleted: false 
     });
 
     if (!note) {
@@ -232,28 +234,42 @@ const changePinStatus = async (req, res) => {
 const changeDeleteStatus = async (req, res) => {
   try {
     const { noteId } = req.params;
+    const currentUserId = req.user?.userId || req.user?._id || req.user?.id;
 
-    const updatedNote = await Notes.findOneAndUpdate(
-      { _id: noteId, userId: req.user?.userId },
-      { 
-        $set: { 
-          isDeleted: true,
-          isPinned: false 
-        } 
-      },
-      { new: true } 
-    );
+    const existingNote = await Notes.findOne({ _id: noteId, userId: currentUserId });
 
-    if (!updatedNote) {
+    if (!existingNote) {
       return res.status(404).json({
         success: false,
         message: "Note not found or unauthorized",
       });
     }
 
+    let updateFields;
+    let successMessage;
+    if (!existingNote.isDeleted) {
+      updateFields = {
+        isDeleted: true,
+        isPinned: false,
+        isArchived: false,
+      };
+      successMessage = "Note moved to trash successfully";
+    } else {
+      updateFields = {
+        isDeleted: false,
+      };
+      successMessage = "Note restored successfully";
+    }
+
+    const updatedNote = await Notes.findOneAndUpdate(
+      { _id: noteId, userId: currentUserId },
+      { $set: updateFields },
+      { new: true }
+    );
+
     return res.status(200).json({
       success: true,
-      message: "Note moved to trash successfully",
+      message: successMessage,
       response: updatedNote, 
     });
 
@@ -265,6 +281,34 @@ const changeDeleteStatus = async (req, res) => {
     });
   }
 };
+
+
+const handlPermanentDelete=async(req, res)=>{
+  const noteId=req.params.noteId;
+  const userId=req.user?.userId;
+  try {
+    
+    const note=await Notes.findOneAndDelete({_id: noteId, userId:userId, isDeleted: true});
+    if(!note){
+      return res.status(404).json({
+        success:false,
+        message:"Note not found or user is unauthorized"
+      });
+    }
+
+    return res.status(200).json({
+      success:true,
+      message:"Note deleted successfully"
+    })
+  } catch (error) {
+    logger.warn(error.message);
+    return res.status(500).json({
+      success:false,
+      message:"Something went wrong, Please try later"
+    })
+  }
+}
+
 
 
 const editNote=async(req, res)=>{
@@ -283,7 +327,7 @@ const editNote=async(req, res)=>{
  }
   try {
     
-    const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId}, {
+    const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId, isDeleted: false}, {
       title: title,
       description:description
     },
@@ -309,5 +353,58 @@ if(!response){
 }
 
 
+const changeArchivedStatus=async(req, res)=>{
+const noteId=req.params.noteId;
+const currentUserId = req.user?.userId || req.user?._id || req.user?.id;
 
-module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus, editNote};
+try{
+  if(!currentUserId){
+    return res.status(404).json({
+      success:false,
+      message:"User not found"
+    })
+  }
+
+const existingNote = await Notes.findOne({ _id: noteId, userId: currentUserId, isDeleted: false });
+
+    if (!existingNote) {
+      return res.status(404).json({ success: false, message: "Note not found" });
+    }
+     const willArchive = !existingNote.isArchived;
+
+    const note = await Notes.findOneAndUpdate(
+      { _id: noteId, userId: currentUserId, isDeleted: false, isArchived: existingNote.isArchived  },
+      { $set: { 
+          isArchived: willArchive, 
+          isPinned: willArchive ? false : existingNote.isPinned
+        } 
+      },
+      { new: true }
+    );
+if(!note){
+  return res.status(404).json({success:false, message:"Note not found"})
+}
+
+
+return res.status(200).json({
+  success:true,
+  message:`Note ${willArchive ? "archived" : "unarchived"} successfully`,
+  note:note
+
+})
+}
+catch(error){
+  logger.warn(error.message);
+    return res.status(500).json({
+      success:false,
+      message:"Something went wrong, Try again later"
+    })
+}
+
+}
+
+
+
+
+
+module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus, editNote, changeArchivedStatus, handlPermanentDelete};
