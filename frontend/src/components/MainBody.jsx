@@ -8,8 +8,8 @@ import axios from "axios";
 import SortDropDown from "./NotesPages/SortDropDown";
 import sortingOptions from '../data/sortingOptions';
 
-
-
+import DownloadNote from '../additional-features/DownloadNote';
+import ImportFile from "../additional-features/ImportFile"
 
 
 const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
@@ -417,23 +417,29 @@ const MainBody = ({ activeCategory, searchQuery }) => {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleOpenCreateModal}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-xs sm:text-sm px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer shrink-0"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            <span className="hidden xs:inline">Create New Note</span>
-            <span className="xs:hidden">New Note</span>
-          </button>
+<div className="flex items-center gap-2 sm:gap-3 shrink-0">
+<button
+  type="button"
+  onClick={handleOpenCreateModal}
+  className="cursor-pointer inline-flex items-center gap-1.5 justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm px-2 py-1.5 sm:px-4 sm:py-2.5 text-center leading-5 transition-all shadow-sm"
+>
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    strokeWidth="2.5"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+  </svg>
+  <span className="hidden sm:inline">New Note</span>
+  {/* <span className="sm:hidden">New</span> */}
+</button>
+
+<ImportFile />
+</div>
+
+
         </div>
 
         <SortDropDown sortBy={sortBy} setSortBy={setSortBy} />
@@ -461,13 +467,16 @@ const MainBody = ({ activeCategory, searchQuery }) => {
                       : "border-l-blue-500"
                     }`}
                 >
-                  <div className="flex justify-between items-start gap-4">
+
+
+<div className="flex justify-between items-center gap-4">
+
                     <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
                       {note.title}
                     </h3>
 
                    
-
+<div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
 {getNoteActionButtons(currentCategory, note, currentId, {
   handleDelete,
   openDeletePopup,
@@ -476,6 +485,9 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   handleUpdate
 })}
 
+<DownloadNote note={note} />
+
+</div>
                   </div>
 
                   <div
