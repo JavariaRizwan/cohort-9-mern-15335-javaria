@@ -103,7 +103,6 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
                           <button
                             type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
                             className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
@@ -204,7 +203,6 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
                           <button
                             type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
                             className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
@@ -243,14 +241,31 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   const [deletingNoteId, setDeletingNoteId] = useState(null);
 
 
+  const parseFileContent=(content)=>{
+    const title=content.match(/^Title:(.*)$/m)
+    const category=content.match(/^Category:(.*)$/m)
+    const subCategory=content.match(/^Sub Category:(.*)$/m)
+    const description=content.match(/Description:\n([\s\S]*)/)
+
+    if(!title){ throw new Error('Invalid file format')};
+    return {
+        title: title[1].trim(),
+        category: category ? category[1].trim() : '',
+        subCategory: subCategory ? subCategory[1].trim() : '',
+        description: description ? description[1].trim() : '',
+    };
+
+  }
+
+
   const handleFileImport=(fileContent)=>{
     try {
-   const parseddata=JSON.parse(fileContent);
+   const parseddata=parseFileContent(fileContent);
     setIsEditingNote({
       title:parseddata.title || "",
       description:parseddata.description || "",
       category:parseddata.category || "",
-      subCategory:parseddata.subcategory || ""
+      subCategory:parseddata.subCategory || ""
          });
     setIsModelOpen(true);
       
@@ -408,7 +423,6 @@ const MainBody = ({ activeCategory, searchQuery }) => {
       );
       if (response.data?.success) {
         toast.success(response.data.message || "Note deleted successfully");
-        // setNotes((prevNotes) => prevNotes.filter((n) => (n._id || n.id) !== noteId));
         getAllNotes();
       }
     } catch (error) {

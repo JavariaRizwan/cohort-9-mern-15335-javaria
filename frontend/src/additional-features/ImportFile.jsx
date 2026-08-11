@@ -19,16 +19,10 @@ if (file.type !== "text/plain" && !file.name.endsWith(".txt")) {
     }
 
 try {
-  // const fileContent=await file.text();
-  // console.log("File loaded", fileContent);
-  // if(onFileImport){
-  //   onFileImport(fileContent);
-  // }
-
 const reader = new FileReader();
         reader.onload = (event) => {
             const fileContent = event.target.result;
-            console.log("File loaded", fileContent);
+            console.log("File loaded suessfully, it's length is ", fileContent.length, "characters");
             if (onFileImport) {
                 onFileImport(fileContent);
             }
@@ -79,7 +73,6 @@ className="cursor-pointer inline-flex items-center gap-1.5 text-white bg-gradien
         ref={inputFileRef}
         onChange={handleFileChange}
         className="hidden"
-//        style={{ display: "none" }}
       />
 </div>
 
