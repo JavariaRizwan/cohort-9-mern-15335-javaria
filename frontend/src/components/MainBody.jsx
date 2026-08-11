@@ -243,6 +243,25 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   const [deletingNoteId, setDeletingNoteId] = useState(null);
 
 
+  const handleFileImport=(fileContent)=>{
+    try {
+   const parseddata=JSON.parse(fileContent);
+    setIsEditingNote({
+      title:parseddata.title || "",
+      description:parseddata.description || "",
+      category:parseddata.category || "",
+      subCategory:parseddata.subcategory || ""
+         });
+    setIsModelOpen(true);
+      
+    } 
+    catch (error) {
+  console.error("Error occured while parsing data in the file", error.message);
+  toast.error("Inavid File Format")      
+    }
+  }
+
+
   const currentCategory = activeCategory || "all";
 
 
@@ -433,10 +452,9 @@ const MainBody = ({ activeCategory, searchQuery }) => {
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
   </svg>
   <span className="hidden sm:inline">New Note</span>
-  {/* <span className="sm:hidden">New</span> */}
 </button>
 
-<ImportFile />
+<ImportFile onFileImport={handleFileImport}/>
 </div>
 
 
