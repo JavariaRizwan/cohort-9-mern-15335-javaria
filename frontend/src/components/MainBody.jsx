@@ -8,8 +8,8 @@ import axios from "axios";
 import SortDropDown from "./NotesPages/SortDropDown";
 import sortingOptions from '../data/sortingOptions';
 
-
-
+import DownloadNote from '../additional-features/DownloadNote';
+import ImportFile from "../additional-features/ImportFile"
 
 
 const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
@@ -103,7 +103,6 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
                           <button
                             type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
                             className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
@@ -204,7 +203,6 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
                           <button
                             type="button"
-                            //  onClick={(e) => handlePermanentDelete(e, currentId)}
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
                             className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
@@ -241,6 +239,42 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   const [sortBy, setSortBy] = useState("date-desc");
   const [isEditingNote, setIsEditingNote] = useState(null)
   const [deletingNoteId, setDeletingNoteId] = useState(null);
+
+
+  const parseFileContent=(content)=>{
+    const title=content.match(/^Title:(.*)$/m)
+    const category=content.match(/^Category:(.*)$/m)
+    const subCategory=content.match(/^Sub Category:(.*)$/m)
+    const description=content.match(/Description:\n([\s\S]*)/)
+
+    if(!title){ throw new Error('Invalid file format')};
+    return {
+        title: title[1].trim(),
+        category: category ? category[1].trim() : '',
+        subCategory: subCategory ? subCategory[1].trim() : '',
+        description: description ? description[1].trim() : '',
+    };
+
+  }
+
+
+  const handleFileImport=(fileContent)=>{
+    try {
+   const parseddata=parseFileContent(fileContent);
+    setIsEditingNote({
+      title:parseddata.title || "",
+      description:parseddata.description || "",
+      category:parseddata.category || "",
+      subCategory:parseddata.subCategory || ""
+         });
+    setIsModelOpen(true);
+      
+    } 
+    catch (error) {
+  console.error("Error occured while parsing data in the file", error.message);
+  toast.error("Inavid File Format")      
+    }
+  }
 
 
   const currentCategory = activeCategory || "all";
@@ -389,7 +423,6 @@ const MainBody = ({ activeCategory, searchQuery }) => {
       );
       if (response.data?.success) {
         toast.success(response.data.message || "Note deleted successfully");
-        // setNotes((prevNotes) => prevNotes.filter((n) => (n._id || n.id) !== noteId));
         getAllNotes();
       }
     } catch (error) {
@@ -417,23 +450,28 @@ const MainBody = ({ activeCategory, searchQuery }) => {
             </p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleOpenCreateModal}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-xs sm:text-sm px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer shrink-0"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            <span className="hidden xs:inline">Create New Note</span>
-            <span className="xs:hidden">New Note</span>
-          </button>
+<div className="flex items-center gap-2 sm:gap-3 shrink-0">
+<button
+  type="button"
+  onClick={handleOpenCreateModal}
+  className="cursor-pointer inline-flex items-center gap-1.5 justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm px-2 py-1.5 sm:px-4 sm:py-2.5 text-center leading-5 transition-all shadow-sm"
+>
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    strokeWidth="2.5"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+  </svg>
+  <span className="hidden sm:inline">New Note</span>
+</button>
+
+<ImportFile onFileImport={handleFileImport}/>
+</div>
+
+
         </div>
 
         <SortDropDown sortBy={sortBy} setSortBy={setSortBy} />
@@ -461,13 +499,16 @@ const MainBody = ({ activeCategory, searchQuery }) => {
                       : "border-l-blue-500"
                     }`}
                 >
-                  <div className="flex justify-between items-start gap-4">
+
+
+<div className="flex justify-between items-center gap-4">
+
                     <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
                       {note.title}
                     </h3>
 
                    
-
+<div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
 {getNoteActionButtons(currentCategory, note, currentId, {
   handleDelete,
   openDeletePopup,
@@ -476,6 +517,9 @@ const MainBody = ({ activeCategory, searchQuery }) => {
   handleUpdate
 })}
 
+<DownloadNote note={note} />
+
+</div>
                   </div>
 
                   <div
