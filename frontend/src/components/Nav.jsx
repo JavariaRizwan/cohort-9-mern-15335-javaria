@@ -191,6 +191,10 @@ className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl te
   <User size={16} /> Profile
 </button>                  
 <button type="button" 
+onClick={()=>{
+navigate('/forward-note');
+}}
+
 className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100">
      <Keyboard size={16} /> Shortcuts
                   </button>

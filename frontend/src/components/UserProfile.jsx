@@ -89,7 +89,7 @@ const UserProfile = ({ onLogout, onNavigateToTrash }) => {
                 <div className="flex flex-col sm:flex-row items-center sm:items-center justify-between gap-6 text-center sm:text-left">
                     <div className="flex flex-col sm:flex-row items-center gap-5">
                         <div className="relative">
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-blue-600 via-blue-500 to-emerald-400 text-white border-4 border-slate-100 shadow-md flex items-center justify-center font-bold text-3xl">
+                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none border-4 border-white focus:ring-blue-300 font-medium shadow-md flex items-center justify-center font-bold text-3xl">
                                 {user.username ? user.username.charAt(0).toUpperCase() : <User className="w-12 h-12" />}
                             </div>
                             <span className="absolute bottom-1 right-1 w-4 h-4 bg-emerald-500 border-2 border-white rounded-full" title="Active Session" />

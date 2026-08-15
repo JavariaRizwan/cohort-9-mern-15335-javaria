@@ -43,13 +43,26 @@ const SignUp=({ onSuccess })=> {
   const handleSubmit = async(e) => {
 
     e.preventDefault();
+   if(formData.password.length<6){
+        return toast.error("Password must be atleast 6 characters");
+      }
+      
     try {
 
       const response= await axios.post('http://localhost:5000/api/save-user', formData);
       
       if (response.data.success) {
       toast.success("User registered successfully!");
-      navigate('/user_dashboard'); // Standardized route path
+      navigate('/user_dashboard'); 
+
+      setFormData({
+     username: '',
+    email: '',
+    password: '',
+    emailUpdates: false,
+      }
+      )
+
     }
 
     } catch (error) {
@@ -144,7 +157,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <form onSubmit={handleSubmit} className="space-y-2.5">
+          <form onSubmit={handleSubmit} className="space-y-2.5" autoComplete='off'>
 
             <div>
 
@@ -165,7 +178,7 @@ const SignUp=({ onSuccess })=> {
                 <input
 
                   type="text"
-
+    autoComplete='off'
                   name="username"
 
                   value={formData.username}
@@ -245,9 +258,8 @@ const SignUp=({ onSuccess })=> {
                 <input
 
                   type={showPassword ? 'text' : 'password'}
-
+                  autoComplete='new-password'
                   name="password"
-
                   value={formData.password}
 
                   onChange={handleChange}

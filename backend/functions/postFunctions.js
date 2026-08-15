@@ -27,7 +27,9 @@ const saveUser=async(req, res)=>{
 
     }
       const hashedPassword= await hashFunction(password);
-      
+      if(!hashedPassword){
+        return res.status(400).send("Error occured while hashing Password");
+      }
       const newUser= await User.create({
             username: username,
             email:normalEmail,
@@ -43,7 +45,7 @@ const saveUser=async(req, res)=>{
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
-        createdAt: newUser.createdAt,
+     //   createdAt: newUser.createdAt,
       },
         })
         
@@ -51,7 +53,7 @@ const saveUser=async(req, res)=>{
 logger.warn({ error }, "Something unexpected happened during signup");
     return res.status(500).json({
       success: false,
-      message: "Internal Server Error",
+      message: "Internal server error",
     });
     }
 }
