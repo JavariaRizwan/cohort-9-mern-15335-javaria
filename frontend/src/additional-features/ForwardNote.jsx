@@ -28,7 +28,7 @@ const ForwardNote = () => {
         fetchNotes();
     }, []);
 
-    const handleSelectNote = (note) => {
+    const handleSelectNote = async(note) => {
         setSelectedNoteId(note._id);
         
         const noteContentText = `------------Note Details
@@ -39,8 +39,12 @@ ${note.description || ''}
 -----------------
 Sent via StackNotes`;
 
-        navigator.clipboard.writeText(noteContentText);
-        toast.success("Note copied to clipboard!");
+       try {
+            await navigator.clipboard.writeText(noteContentText);
+            toast.success("Note copied to clipboard!");
+        } catch {
+            toast.error("Could not copy the note to the clipboard.");
+        }
     };
 
     const handleOpenEmail = () => {

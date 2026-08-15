@@ -1,11 +1,11 @@
-const {hashPassword} = require('../functions/utils');
+const {hashFunction} = require('../functions/utils');
 const {expect}=require('chai');
 const bcrypt=require("bcryptjs")
 
 describe("Password Hash Function", ()=>{
         const password="MyTestingPassword";
         it("shoudl hash the password", async()=>{
-            const hashPass=await hashPassword(password);
+            const hashPass=await hashFunction(password);
             expect(hashPass).to.exist;
             expect(hashPass).to.not.equal(password);
         

@@ -196,7 +196,7 @@ navigate('/forward-note');
 }}
 
 className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm hover:bg-slate-100">
-     <Keyboard size={16} /> Shortcuts
+     <Keyboard size={16} /> Forward Note
                   </button>
                   <div className="my-1 border-t border-slate-100 " />
                   <button type="button" className="cursor-pointer w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-red-500 hover:bg-red-50"

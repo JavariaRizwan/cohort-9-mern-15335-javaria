@@ -53,7 +53,7 @@ const SignUp=({ onSuccess })=> {
       
       if (response.data.success) {
       toast.success("User registered successfully!");
-      navigate('/user_dashboard'); 
+      navigate('/signin'); 
 
       setFormData({
      username: '',
@@ -66,8 +66,8 @@ const SignUp=({ onSuccess })=> {
     }
 
     } catch (error) {
-    const errorMsg = error.response?.data?.message || "Error occurred while registering user";
-    toast.error(errorMsg);    }
+    const errorMesssage = error.response?.data?.message || "Error occurred while registering user";
+    toast.error(errorMesssage);    }
     
   };
 

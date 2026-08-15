@@ -28,7 +28,7 @@ const saveUser=async(req, res)=>{
     }
       const hashedPassword= await hashFunction(password);
       if(!hashedPassword){
-        return res.status(400).send("Error occured while hashing Password");
+        throw new Error("Error occured while hashing Password");
       }
       const newUser= await User.create({
             username: username,

@@ -80,6 +80,8 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             if (response.data.success) {
               onSaveNote?.(response.data.note); 
                 toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
+               setFormData({ title: '', description: '', category: '', subCategory: '' });
+                setContent('');
                 onClose();
             } else {
                 toast.error(response.data.message || "Something went wrong");
