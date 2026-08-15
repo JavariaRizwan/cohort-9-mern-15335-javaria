@@ -71,7 +71,7 @@ const SignIn=({ onSuccess })=> {
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="usernameOrEmail" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
                 Username / Email
               </label>
               <div className="relative">
@@ -93,7 +93,7 @@ const SignIn=({ onSuccess })=> {
 
             <div>
               <div className="flex justify-between items-center mb-0.5">
-                <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <label htmlFor='password' className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   Password
                 </label>
                 <button
@@ -138,7 +138,7 @@ autoComplete="new-password"
 
           <div className="mt-4 text-center text-[11px] text-slate-500 dark:text-slate-400">
             Don't have an account?{' '}
-            <button
+            <button type="button"
               onClick={() => navigate('/signup')}
               className="text-blue-600 dark:text-blue-400 cursor-pointer font-semibold hover:underline"
             >

@@ -5,6 +5,7 @@ const jwt=require("jsonwebtoken");
 const logger=require("../src/config/logger");
 require('dotenv').config();
 const Notes=require("../schemas/noteSchema")
+const Category=require('../schemas/categorySchema')
 
 const saveUser=async(req, res)=>{
     try {
@@ -152,7 +153,7 @@ const logout=async(req, res)=>{
 
 const createNewNote=async(req, res)=>{
 const userId = req.user?.userId;
- const {title, description, category, subCategory}=req.body;
+ const {title, description, category}=req.body;
     try {
 
         if (!userId) {
@@ -167,19 +168,12 @@ const userId = req.user?.userId;
         message: "Title and description are required!"
       });
     }
-    if(!category || !subCategory){
-        return res.status(400).json({
-        success: false,
-        message: "Category and subCategory are required!"
-      });
-    }
     const newNote = await Notes.create({
         userId,
         title,
         description,
-        category,
-        subCategory
-    });
+        category: category || null,
+      });
     return res.status(201).json({
     message:"Note created successfully",
     success:true,
@@ -189,7 +183,6 @@ const userId = req.user?.userId;
         title: newNote.title,
         description: newNote.description,
         category: newNote.category,
-        subCategory: newNote.subCategory
     }
 })
 } catch (error) {
@@ -406,7 +399,32 @@ catch(error){
 }
 
 
+const createNewCategory=async(req, res)=>{
+  const {c_name}=req.body;
+  const userId = req.userId || req.user?.userId;
+  try {
+    const response= await Category.create({
+      c_name:c_name,
+      userId: userId
+    })
+    if(response){
+      return res.status(200).json({
+        success:true,
+        message:"Category saved successfully"
+      })
+    }
+  } catch (error) {
+    logger.warn("Error occured while saving category", error.message);
+    console.error("Error", error.message)
+    return res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}
 
 
 
-module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus, editNote, changeArchivedStatus, handlPermanentDelete};
+
+
+module.exports={saveUser, login, logout, createNewNote, changePinStatus, changeDeleteStatus, editNote, changeArchivedStatus, handlPermanentDelete, createNewCategory};

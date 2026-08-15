@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import JoditEditor from 'jodit-react';
 import { toast } from 'react-hot-toast';
 import { ArrowLeft, Tag, Check } from 'lucide-react';
-import categories from "../../data/categories";
 import axios from "axios";
 
 const getCharCount = (html) => html ? new DOMParser().parseFromString(html, 'text/html').body.textContent?.length || 0 : 0;
@@ -10,8 +9,9 @@ const getCharCount = (html) => html ? new DOMParser().parseFromString(html, 'tex
 const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
     const editor = useRef(null);
     const [content, setContent] = useState('');
-    const [formData, setFormData] = useState({ title: '', description: '', category: '', subCategory: '' });
+    const [formData, setFormData] = useState({ title: '', description: '', category: ''});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [categories, setCategories]=useState([]);
 
        const config = useMemo(() => ({
         readonly: false,
@@ -28,17 +28,35 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
          ]
      }), [isEditingNote]);
 
+
+const getCategories=async()=>{
+    try {
+        const res=await axios.get("http://localhost:5000/api/categories", {withCredentials:true});
+        if(res.data.success){
+            setCategories(res.data.response || []);
+        }
+
+    } catch (error) {
+        toast.error("Error occured while fetching categories");
+        console.error(error.message);
+    }
+}
+
+useEffect(()=>{
+    getCategories()
+}, [isOpen]);
+
+
     useEffect(() => {
         if (isEditingNote) {
             setFormData({
                 title: isEditingNote.title || '',
                 description: isEditingNote.description || '',
-                category: isEditingNote.category || '',
-                subCategory: isEditingNote.subCategory || ''
+                category: isEditingNote.category?._id || '',
             });
             setContent(isEditingNote.description || '');
         } else {
-            setFormData({ title: '', description: '', category: '', subCategory: '' });
+            setFormData({ title: '', description: '', category: '' });
             setContent('');
         }
         setIsSubmitting(false);  
@@ -51,19 +69,12 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
         setFormData(prev => ({
             ...prev,
             [name]: value,
-            ...(name === 'category' ? { subCategory: '' } : {})
-        }));
+            }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(isSubmitting) return;
-        if(!formData.category){
-            return toast.error("Please select a Category first");
-        }
-        if(!formData.subCategory){
-            return toast.error("Please select a subCategory first");
-        }
 
         if (!formData.title.trim()) 
             return toast.error("Please add a title for your note.");
@@ -80,7 +91,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             if (response.data.success) {
               onSaveNote?.(response.data.note); 
                 toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
-               setFormData({ title: '', description: '', category: '', subCategory: '' });
+               setFormData({ title: '', description: '', category: ''});
                 setContent('');
                 onClose();
             } else {
@@ -139,20 +150,16 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
                         <Tag className="w-3.5 h-3.5" />
                         <span>Category:</span>
                     </div>
-                    <select name="category" value={formData.category} onChange={handleChange} className="px-3 py-1.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-700 outline-none">
-                        <option value="">Select category</option>
-                        {Object.keys(categories).map(cat => 
-                        <option key={cat} value={cat}>{cat}</option>
-                        )}
+                    <select name="category" value={formData.category} onChange={handleChange} disabled={categories.length===0} className="px-3 py-1.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-700 outline-none  disabled:opacity-50 disabled:cursor-not-allowed">
+                        <option value="">
+        {categories.length === 0 ? "No categories yet" : "Select category"}
+    </option>
+    {categories.map(cat => 
+        <option key={cat._id} value={cat._id}>{cat.c_name}</option>
+    )}
                     </select>
 
-                    <select name="subCategory" value={formData.subCategory} onChange={handleChange} 
-                    disabled={!formData.category} className="px-3 py-1.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-700 outline-none disabled:opacity-40">
-                        <option value="">Select subcategory</option>
-                        {formData.category && categories[formData.category]?.map(sub => 
-                        <option key={sub} value={sub}>{sub}</option>
-                        )}
-                    </select>
+                  
                 </div>
 
                 <div className="flex-1 min-h-[400px]">

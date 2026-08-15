@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './Nav';
 import Sidebar from './Sidebar';
 import MainBody from './MainBody';
+import axios from 'axios';
+import {toast} from 'react-hot-toast'
+
 
 const Middle = ({ onLogout }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [categories, setCategories]=useState([]);
+
+    
+const handleGetCategories = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/api/categories", { withCredentials: true });
+    if (response.data.success) {
+      setCategories(response.data.response);
+    } else {
+      toast.error(response.data.message || "Failed to load categories");
+    }
+  } catch (error) {
+    // Log the full error object so you can see it clearly in the console
+    console.error("Fetch categories error:", error);
+    
+    // Safely extract message for the toast
+    const errorMessage = error.response?.data?.message || error.message || "Error occurred while fetching categories";
+    toast.error(errorMessage);
+  }
+};
+
+useEffect(() => {
+    handleGetCategories();
+}, []);
+
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
@@ -34,13 +62,15 @@ const Middle = ({ onLogout }) => {
           activeCategory={activeCategory} 
           setActiveCategory={setActiveCategory}
           onLogout={onLogout}
+          onCategoryAdded={handleGetCategories}
         />
 
         <div className={`flex-1 h-full overflow-y-auto w-full transition-all duration-300 ease-in-out ${sidebarOpen ? 'md:ml-0' : 'md:-ml-64'}`}>
           <MainBody 
             activeCategory={activeCategory} 
             searchQuery={searchQuery}
-          />
+            categories={categories}
+/>
         </div>
       </div>
     </div>

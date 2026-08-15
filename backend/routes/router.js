@@ -2,10 +2,10 @@
 const express=require("express");
 const router = express.Router();
 const {saveUser, login, logout, createNewNote, changeArchivedStatus, handlPermanentDelete,
-    changeDeleteStatus, changePinStatus, editNote}=require("../functions/postFunctions");
+    changeDeleteStatus, changePinStatus, editNote, createNewCategory}=require("../functions/postFunctions");
 const authenticate = require("../middleware/authenticate");
 const verify=require("../functions/verify_token");
-const { getNotePerUser}= require("../functions/getFunctions");
+const { getNotePerUser, getAllCategories}= require("../functions/getFunctions");
 
 
 router.post('/save-user', saveUser);
@@ -19,7 +19,8 @@ router.put('/delete-note/:noteId', authenticate, changeDeleteStatus);
 router.put('/edit-note/:noteId', authenticate, editNote);
 router.put('/archive-note/:noteId', authenticate, changeArchivedStatus);
 router.delete('/permanent-delete/:noteId', authenticate, handlPermanentDelete)
-
+router.get('/categories', authenticate, getAllCategories);
+router.post('/save-category', authenticate, createNewCategory);
 
 
 module.exports=router;
