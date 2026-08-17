@@ -464,9 +464,14 @@ className="w-full text-left bg-white border border-slate-200/80 rounded-2xl p-4 
                     }`}
                   >
                     <div className="flex justify-between items-center gap-4">
+                      <div className="flex flex-col gap-1">
                       <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
                         {note.title}
                       </h3>
+                      <span className="w-fit text-xs text-blue-600 bg-blue-50 font-medium px-2 py-0.5 rounded-full">
+  {note.category?.c_name || "Uncategorized"}
+</span>
+</div>
                       <button type="button" className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                         {getNoteActionButtons(currentCategory, note, currentId, {
                           handleDelete,
