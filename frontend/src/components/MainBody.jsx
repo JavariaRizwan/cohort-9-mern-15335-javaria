@@ -144,7 +144,7 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
 
 
-const MainBody = ({ activeCategory, searchQuery, categories=[] }) => {
+const MainBody = ({ activeCategory, searchQuery, categories=[], onSelectCategory}) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("date-desc");
@@ -171,10 +171,15 @@ const MainBody = ({ activeCategory, searchQuery, categories=[] }) => {
   const handleFileImport=(fileContent)=>{
     try {
    const parseddata=parseFileContent(fileContent);
-    setIsEditingNote({
+   const rawCategory = parseddata.category;
+
+const safeCategory = (typeof rawCategory === "string" && rawCategory.includes("object Object")) 
+  ? "" 
+  : (rawCategory?._id || rawCategory || ""); 
+   setIsEditingNote({
       title:parseddata.title || "",
       description:parseddata.description || "",
-      category:parseddata.category || "",
+      category:safeCategory,
          });
     setIsModelOpen(true);
       
@@ -354,15 +359,27 @@ const filteredCategories = categories.filter((cat) => {
     setIsModelOpen(true);
   };
 
+
+
+const getNoteTitle=()=>{
+if(currentCategory==='categories'){
+  return 'All Categories';
+}
+if(activeCategory){
+  return `${activeCategory} Notes`
+}
+return 'My Notes'
+}
+
+
   return (
     <>
       <main className="flex-1 p-3 sm:p-5 md:p-6 max-w-5xl mx-auto space-y-4">
         <div className="flex items-center justify-between gap-4 pb-1">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight capitalize">
-              {currentCategory === 'categories' 
-                ? 'All Categories' 
-                : activeCategory ? `${activeCategory} Notes` : "My Notes"}
+              {getNoteTitle()}
+
             </h1>
             <p className="text-xs sm:text-sm text-slate-500">
               {currentCategory === 'categories' 
@@ -410,7 +427,7 @@ const filteredCategories = categories.filter((cat) => {
                   return (
                     <button type="button" 
                       key={catId}
-                      onClick={() => handleNavClick(catName)}
+                      onClick={() => onSelectCategory ? onSelectCategory(catId) : console.log(catId)}
 className="w-full text-left bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-xs hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-between group hover:-translate-y-0.5">
                       <p className="text-slate-900 text-sm sm:text-base group-hover:text-blue-600 transition-colors">
                         {catName}
@@ -436,7 +453,7 @@ className="w-full text-left bg-white border border-slate-200/80 rounded-2xl p-4 
               sortedNotes.map((note) => {
                 const currentId = note._id || note.id;
                 return (
-                  <button type="button"
+                  <button type='button'
                     tabIndex={0}
                     onKeyDown={(e) => handleKeyDownNote(e, note)}
                     onClick={(e) => handleUpdate(e, note)}

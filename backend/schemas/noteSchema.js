@@ -16,7 +16,7 @@ const notes = new mongoose.Schema({
     },
     category: {
   type: mongoose.Types.ObjectId,
-  default: null,
+//  default: null,
   ref:'Category'
 },
     isPinned: {

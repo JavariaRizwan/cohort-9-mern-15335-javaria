@@ -80,6 +80,7 @@ const SignIn=({ onSuccess })=> {
                 </div>
                 <input
                   type="text"
+                  id="usernameOrEmail"
                   autoComplete='off'
                   name="usernameOrEmail"
                   value={formData.usernameOrEmail}
@@ -108,6 +109,7 @@ const SignIn=({ onSuccess })=> {
                   <Lock size={14} />
                 </div>
                 <input
+                id="password"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
 autoComplete="new-password"

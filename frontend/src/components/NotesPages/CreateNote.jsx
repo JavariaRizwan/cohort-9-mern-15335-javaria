@@ -43,16 +43,22 @@ const getCategories=async()=>{
 }
 
 useEffect(()=>{
+    if(isOpen){
     getCategories()
+    }
 }, [isOpen]);
 
 
     useEffect(() => {
         if (isEditingNote) {
+            const categoryId = typeof isEditingNote.category === "object" && isEditingNote.category !== null
+            ? isEditingNote.category._id || ""
+            : isEditingNote.category || "";
             setFormData({
                 title: isEditingNote.title || '',
                 description: isEditingNote.description || '',
-                category: isEditingNote.category?._id || '',
+                //category: isEditingNote.category?._id || '',
+            category: categoryId,
             });
             setContent(isEditingNote.description || '');
         } else {
@@ -61,6 +67,20 @@ useEffect(()=>{
         }
         setIsSubmitting(false);  
     }, [isEditingNote, isOpen]);
+
+
+useEffect(() => {
+    if (isEditingNote && categories.length > 0) {
+        const categoryId = typeof isEditingNote.category === "object" && isEditingNote.category !== null
+            ? isEditingNote.category._id || ""
+            : isEditingNote.category || "";
+
+        if (categoryId) {
+            setFormData(prev => ({ ...prev, category: categoryId }));
+        }
+    }
+}, [categories, isEditingNote]);
+
 
     if (!isOpen) return null;
 

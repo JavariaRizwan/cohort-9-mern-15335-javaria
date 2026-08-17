@@ -12,10 +12,9 @@ const stripHtml = (html) => {
 
     const title=note.title || '';
     const description=stripHtml(note.description);
-    const category=`Category: ${note.category}`;
-    const subCategory=`Sub Category: ${note.subCategory}`;
+    const category=`Category: ${note.category?.name || note.category?.c_name || "Uncategorized"}`;
 
-const noteData=`Title: ${title}\n${category}\n${subCategory}\n\nDescription:\n${description}`;
+const noteData=`Title: ${title}\n${category}\n\nDescription:\n${description}`;
 const blob=new Blob([noteData], {type: "text/plain; charset=utf-8"});
 const url=URL.createObjectURL(blob);
 

@@ -22,10 +22,8 @@ const handleGetCategories = async () => {
       toast.error(response.data.message || "Failed to load categories");
     }
   } catch (error) {
-    // Log the full error object so you can see it clearly in the console
     console.error("Fetch categories error:", error);
     
-    // Safely extract message for the toast
     const errorMessage = error.response?.data?.message || error.message || "Error occurred while fetching categories";
     toast.error(errorMessage);
   }
@@ -70,6 +68,7 @@ useEffect(() => {
             activeCategory={activeCategory} 
             searchQuery={searchQuery}
             categories={categories}
+           onSelectCategory={(catId) => setActiveCategory(catId)}
 />
         </div>
       </div>
