@@ -4,7 +4,7 @@ import axios from "axios";
 
 const ProtectedRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const hasChecked = useRef(false); // Prevents StrictMode double call
+  const hasChecked = useRef(false); 
 
   useEffect(() => {
     if (hasChecked.current) return;
@@ -16,7 +16,7 @@ const ProtectedRoute = () => {
           withCredentials: true
         });
 
-        if (response.data?.valid) {
+        if (response.data?.valid || response.data?.user || response.data?.success) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);

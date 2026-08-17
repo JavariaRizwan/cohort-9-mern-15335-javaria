@@ -41,6 +41,7 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             setFormData({ title: '', description: '', category: '', subCategory: '' });
             setContent('');
         }
+        setIsSubmitting(false);  
     }, [isEditingNote, isOpen]);
 
     if (!isOpen) return null;
@@ -57,6 +58,13 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(isSubmitting) return;
+        if(!formData.category){
+            return toast.error("Please select a Category first");
+        }
+        if(!formData.subCategory){
+            return toast.error("Please select a subCategory first");
+        }
+
         if (!formData.title.trim()) 
             return toast.error("Please add a title for your note.");
         setIsSubmitting(true);
@@ -70,15 +78,19 @@ const CreateNote = ({ isOpen, onClose, onSaveNote, isEditingNote = null }) => {
             const response = await method(url, { ...formData, description: content }, { withCredentials: true });
 
             if (response.data.success) {
-        //        onSaveNote(response.data.note);
               onSaveNote?.(response.data.note); 
                 toast.success(isEditingNote ? "Note updated successfully!" : "Note created successfully!");
+               setFormData({ title: '', description: '', category: '', subCategory: '' });
+                setContent('');
                 onClose();
             } else {
                 toast.error(response.data.message || "Something went wrong");
             }
         } catch (error) {
             toast.error(error.message || "Failed to save Note!");
+            setIsSubmitting(false);
+        }
+        finally{
             setIsSubmitting(false);
         }
     };

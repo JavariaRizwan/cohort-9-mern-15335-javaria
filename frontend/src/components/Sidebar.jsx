@@ -40,11 +40,6 @@ const handleNavClick = (category) => {
 
     <aside
 inert={!sidebarOpen ? "" : undefined}
-// className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
-//         sidebarOpen 
-//           ? 'translate-x-0' 
-//           : '-translate-x-full md:-translate-x-full'
-//       }`}
 className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r border-slate-200 bg-white p-4 shrink-0 z-30 transform transition-transform duration-300 ease-in-out flex flex-col justify-between ${
     sidebarOpen 
       ? 'translate-x-0' 

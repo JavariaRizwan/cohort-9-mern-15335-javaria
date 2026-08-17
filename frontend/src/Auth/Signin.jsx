@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import axios from "axios";
 import { User, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
@@ -80,6 +80,7 @@ const SignIn=({ onSuccess })=> {
                 </div>
                 <input
                   type="text"
+                  autoComplete='off'
                   name="usernameOrEmail"
                   value={formData.usernameOrEmail}
                   onChange={handleChange}
@@ -109,6 +110,7 @@ const SignIn=({ onSuccess })=> {
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
+autoComplete="new-password"
                   value={formData.password}
                   onChange={handleChange}
                   required

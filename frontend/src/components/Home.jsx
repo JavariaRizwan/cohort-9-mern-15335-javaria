@@ -1,7 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Sparkles, Search, FolderSync, Tags, ArrowRight,  CheckCircle2, ChevronRight } from 'lucide-react';
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 
 export default function Home({ onGetStarted, onSignIn }) {
+
+  const navigate=useNavigate();
+
+  useEffect(() => {
+    const checkExistingSession = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/user-notes', {
+          withCredentials: true,
+        });
+
+        if (response.data.success) {
+          navigate('/user_dashboard');
+        }
+      } catch (error) {
+        console.error("No active session found", error.message);
+      }
+    };
+
+    checkExistingSession();
+  }, [navigate]);
 
 
 
