@@ -1,6 +1,6 @@
 const Notes=require("../schemas/noteSchema");
 const User=require("../schemas/userSchema")
-
+const Category=require("../schemas/categorySchema");
 
 
 const getNotePerUser=async(req, res)=>{
@@ -19,7 +19,7 @@ try {
             message:"User profile not found"
         })
     }
-    const notesData = await Notes.find({userId}).sort({createdAt: -1});
+    const notesData = await Notes.find({userId}).populate('category').sort({createdAt: -1});
     return res.status(200).json({
         success:true,
         count: notesData.length,
@@ -34,6 +34,27 @@ try {
     })
 }
 }
+
+
+
+const getAllCategories=async(req, res)=>{
+const userId=req.user?.userId
+  try {
+const response = await Category.find({ userId: userId });
+ 
+    return res.status(200).json({
+        success:true,
+        message:"All Categories loaded successfully",
+        response
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      message:error.message
+    })
+  }
+}
+
 
 // const getUserCredentials=async(req, res)=>{
 //     const user_id=req.user?.userId;
@@ -62,4 +83,4 @@ try {
 
 
 
-module.exports = {getNotePerUser};
+module.exports = {getNotePerUser, getAllCategories};

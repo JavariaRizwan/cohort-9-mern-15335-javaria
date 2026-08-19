@@ -1,6 +1,6 @@
 import React from 'react';
 import sortingOptions from '../../data/sortingOptions';
-
+import {ChevronDown} from 'lucide-react'
 
 const SortDropDown=({sortBy, setSortBy})=>{
 return(
@@ -18,15 +18,7 @@ className="appearance-none cursor-pointer pl-3.5 pr-8 py-2 text-xs sm:text-sm fo
     </select>
 
 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2.5 text-slate-400">
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          strokeWidth="2"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        <ChevronDown className="w-4 h-4" strokeWidth={2} />
       </div>
     </div>
 

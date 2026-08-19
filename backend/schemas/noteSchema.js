@@ -15,12 +15,9 @@ const notes = new mongoose.Schema({
         required: true
     },
     category: {
-  type: String,
-  default: "General"
-},
-subCategory:{
-     type: String,
-  default: null
+  type: mongoose.Types.ObjectId,
+//  default: null,
+  ref:'Category'
 },
     isPinned: {
         type: Boolean,
