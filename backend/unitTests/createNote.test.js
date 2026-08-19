@@ -28,8 +28,12 @@ describe("Controller: Create new Note", ()=>{
     it("shold throw unauthorized error(401) for missing user id", async()=>{
         req.user={};
         req.body={title:"Test ttle", description:"test descritpion"};
-
+try {
         await createNewNote(req, res);
+    
+} catch (error) {
+    throw error
+}
 
         expect(res.status.calledWith(401)).to.be.true;
         expect(res.json.calledOnce).to.be.true;
@@ -51,9 +55,13 @@ it("should save note to db", async()=>{
     };
 
     sinon.stub(Note, 'create').resolves(createdNote);
+try{
+    await createNewNote(req, res);
 
-        await createNewNote(req, res);
-
+}
+catch(error){
+    throw error;
+}    
         expect(res.status.calledWith(201)).to.be.true;
         expect(res.json.calledOnce).to.be.true;
 

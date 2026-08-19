@@ -34,8 +34,13 @@ it("shpudl return 400 for missing fields", async()=>{
     req.body={usernameOrEmail: "testuser"};
     sinon.stub(logger, 'warn');
 
-        await login(req, res);
+    try{
+await login(req, res);
 
+    }
+catch(error){
+    throw error;
+}        
         expect(res.status.calledWith(400)).to.be.true;
         expect(res.json.calledOnce).to.be.true;
 
@@ -59,7 +64,13 @@ it("should login th user successfully", async()=>{
         sinon.stub(jwt, 'sign').returns('test_token');
         sinon.stub(logger, 'info');
 
+        try{
         await login(req, res);
+        }
+        catch(error){
+throw error;
+        }
+
 
         expect(res.status.calledWith(200)).to.be.true;
 

@@ -28,7 +28,7 @@ const fillForm = (user = 'test_user', email = 'testing1@gmail.com', pass = '1234
     fireEvent.change(screen.getByPlaceholderText(/enter your username/i), { target: { name: 'username', value: user } });
     fireEvent.change(screen.getByPlaceholderText(/name@example.com/i), { target: { name: 'email', value: email } });
     fireEvent.change(screen.getByPlaceholderText(/enter your password/i), { target: { name: 'password', value: pass } });
-    fireEvent.click(screen.getByRole('button', { name: /sign up/i }));
+
 };
 
 describe('SignUp Component', () => {
@@ -43,7 +43,9 @@ describe('SignUp Component', () => {
     fillForm();
     fireEvent.click(screen.getByRole('button', { name: /sign up/i }));
 
+    try{
     await waitFor(() => {
+
       expect(axios.post).toHaveBeenCalledWith(
         'http://localhost:5000/api/save-user',
         expect.objectContaining({
@@ -54,8 +56,45 @@ describe('SignUp Component', () => {
       );
     });
 
+
+    }
+catch(error){
+  throw error;
+}
     expect(toast.success).toHaveBeenCalledWith('User registered successfully!');
     expect(mockNavigate).toHaveBeenCalledWith('/signin');
   });
+
+
+it('should show error toast when email already exists', async () => {
+    axios.post.mockRejectedValueOnce({
+      response: {
+        status: 409,
+        data: {
+          success: false,
+          message: "Email already exists!" 
+        }
+      }
+    });
+
+    renderComponent();
+    fillForm();
+
+    fireEvent.click(screen.getByRole('button', { name: /sign up/i }));
+
+    try{
+    await waitFor(() => {
+      expect(axios.post).toHaveBeenCalled();
+      expect(toast.error).toHaveBeenCalledWith('Email already exists!');
+    });
+    }
+    catch(error)
+{
+  throw error;
+}
+  });
+
+
+
 
 })

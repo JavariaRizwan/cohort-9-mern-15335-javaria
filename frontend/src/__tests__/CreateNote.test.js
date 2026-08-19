@@ -53,7 +53,7 @@ it('successfully creates a new note and calls onSaveNote', async () => {
             data: { success: true, response: [] }
         });
         axios.post.mockResolvedValueOnce({
-            data: { success: true, note: { _id: 'note1', title: 'Test Note' } }
+            data: { success: true, note: { id: 'note1', title: 'Test Note' } }
         });
 
         render(
@@ -65,8 +65,8 @@ it('successfully creates a new note and calls onSaveNote', async () => {
 
         const saveButton = screen.getByRole('button', { name: /save note/i });
         fireEvent.click(saveButton);
-
-        await waitFor(() => {
+try{
+    await waitFor(() => {
             expect(axios.post).toHaveBeenCalledWith(
                 'http://localhost:5000/api/create-note',
                 expect.objectContaining({
@@ -77,9 +77,14 @@ it('successfully creates a new note and calls onSaveNote', async () => {
                 { withCredentials: true }
             );
             expect(toast.success).toHaveBeenCalledWith('Note created successfully!');
-            expect(onSaveNote).toHaveBeenCalledWith({ _id: 'note1', title: 'Test Note' });
+            expect(onSaveNote).toHaveBeenCalledWith({ id: 'note1', title: 'Test Note' });
             expect(onClose).toHaveBeenCalled();
         });
+    
+}
+catch(error){
+    throw error;
+}
     });
 
 
