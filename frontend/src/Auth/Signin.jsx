@@ -34,10 +34,12 @@ const SignIn=({ onSuccess })=> {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 dark:bg-slate-900 md:dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
-  <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white dark:bg-slate-900 rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 md:dark:border-slate-800 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">    
+<div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 text-slate-800 transition-colors">
+  <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">    
         <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
+
   <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
+
   <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-indigo-400/20 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
@@ -59,19 +61,19 @@ const SignIn=({ onSuccess })=> {
           </div>
         </div>
 
-        <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white dark:bg-slate-900 overflow-y-auto">
+        <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white overflow-y-auto">
           <div className="mb-4">
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900">
               Sign In
             </h2>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] text-slate-500">
               Enter your details to sign in to your account
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="usernameOrEmail" className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="usernameOrEmail" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
                 Username / Email
               </label>
               <div className="relative">
@@ -87,37 +89,32 @@ const SignIn=({ onSuccess })=> {
                   onChange={handleChange}
                   required
                   placeholder="Enter your username/email"
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
                 />
               </div>
             </div>
 
-            <div>
+
+<div>
               <div className="flex justify-between items-center mb-0.5">
-                <label htmlFor='password' className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <label htmlFor='password' className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                   Password
                 </label>
-                <button
-                  type="button"
-                  className="text-[10px] font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  Having trouble in sign in?
-                </button>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
                   <Lock size={14} />
                 </div>
                 <input
-                id="password"
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
                   name="password"
-autoComplete="new-password"
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg text-xs outline-none text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
                 />
                 <button
                   type="button"
@@ -127,7 +124,18 @@ autoComplete="new-password"
                   {showPassword ? <Eye size={14} /> : <EyeOff size={14} />}
                 </button>
               </div>
+              
+              <div className="flex justify-end mt-1">
+                <button
+                  type="button"
+                  className="text-[10px] font-medium text-blue-600 hover:underline"
+                >
+                  Having trouble in sign in?
+                </button>
+              </div>
             </div>
+
+
 
             <button
               type="submit"
@@ -138,11 +146,11 @@ autoComplete="new-password"
             </button>
           </form>
 
-          <div className="mt-4 text-center text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="mt-4 text-center text-[11px] text-slate-500">
             Don't have an account?{' '}
             <button type="button"
               onClick={() => navigate('/signup')}
-              className="text-blue-600 dark:text-blue-400 cursor-pointer font-semibold hover:underline"
+              className="text-blue-600 cursor-pointer font-semibold hover:underline"
             >
               Signup Now
             </button>
