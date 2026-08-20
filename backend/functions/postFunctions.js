@@ -11,7 +11,7 @@ const saveUser=async(req, res)=>{
     try {
       const {username, email, password, emailUpdates}=req.body;
 
-        if(!username || !password || !email){
+        if(!username || !password || !email || email.trim() === ""){
             logger.warn("Signup failed: Missing required fields");
             return res.status(400).json({
                 success:false,
@@ -22,7 +22,7 @@ const saveUser=async(req, res)=>{
         const existingUser=await User.findOne({email:normalEmail});
         if(existingUser){
             logger.warn("SignUp failed! Email already exists");
-            return res.status(400).json({success: false, 
+            return res.status(409).json({success: false, 
         message: "User with this email already exists." 
       });
 
