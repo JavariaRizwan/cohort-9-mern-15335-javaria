@@ -213,15 +213,15 @@ const changePinStatus = async (req, res) => {
     // note.isPinned = !note.isPinned;
     // await note.save();
 
-    const updatedNote = await Notes.findByIdAndUpdate(
-      noteId,
+    const updatedNote = await Notes.findOneAndUpdate(
+    { _id: noteId, userId: currentUserId, isDeleted: false, isPinned: note.isPinned },
       { isPinned: !note.isPinned },
       { new: true, runValidators: false }
     );
 
     return res.status(200).json({
-      success: true,
-      message: `Note ${note.isPinned ? "pinned" : "unpinned"} successfully`,
+      success: true,  
+      message: `Note ${updatedNote.isPinned ? "pinned" : "unpinned"} successfully`,
       response: updatedNote,
     });
   } catch (error) {
