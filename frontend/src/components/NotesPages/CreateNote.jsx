@@ -49,37 +49,29 @@ useEffect(()=>{
 }, [isOpen]);
 
 
+
     useEffect(() => {
-        if (isEditingNote) {
-            const categoryId = typeof isEditingNote.category === "object" && isEditingNote.category !== null
-            ? isEditingNote.category._id || ""
-            : isEditingNote.category || "";
-            setFormData({
-                title: isEditingNote.title || '',
-                description: isEditingNote.description || '',
-                //category: isEditingNote.category?._id || '',
+    if (!isOpen) return;
+
+if (isEditingNote) {
+    const c_id = isEditingNote.category;
+    const catId = typeof c_id === "object" && c_id !== null ? c_id?._id : c_id;
+    const categoryId = categories.find(cat => cat._id === catId || cat.c_name === c_id)?._id || "";
+
+        setFormData({
+            title: isEditingNote.title || '',
+            description: isEditingNote.description || '',
             category: categoryId,
-            });
-            setContent(isEditingNote.description || '');
-        } else {
-            setFormData({ title: '', description: '', category: '' });
-            setContent('');
-        }
-        setIsSubmitting(false);  
-    }, [isEditingNote, isOpen]);
-
-
-useEffect(() => {
-    if (isEditingNote && categories.length > 0) {
-        const categoryId = typeof isEditingNote.category === "object" && isEditingNote.category !== null
-            ? isEditingNote.category._id || ""
-            : isEditingNote.category || "";
-
-        if (categoryId) {
-            setFormData(prev => ({ ...prev, category: categoryId }));
-        }
+        });
+        setContent(isEditingNote.description || '');
+    } else {
+        setFormData({ title: '', description: '', category: '' });
+        setContent('');
     }
-}, [categories, isEditingNote]);
+    setIsSubmitting(false);
+}, [isEditingNote, isOpen, categories]);
+
+
 
 
     if (!isOpen) return null;
