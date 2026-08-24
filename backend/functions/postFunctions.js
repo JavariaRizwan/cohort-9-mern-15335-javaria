@@ -210,15 +210,22 @@ const changePinStatus = async (req, res) => {
       return res.status(404).json({ success: false, message: "Note not found or unauthorized" });
     }
 
-    note.isPinned = !note.isPinned;
-    await note.save();
+    // note.isPinned = !note.isPinned;
+    // await note.save();
+
+    const updatedNote = await Notes.findOneAndUpdate(
+    { _id: noteId, userId: currentUserId, isDeleted: false, isPinned: note.isPinned },
+      { isPinned: !note.isPinned },
+      { new: true, runValidators: false }
+    );
 
     return res.status(200).json({
-      success: true,
-      message: `Note ${note.isPinned ? "pinned" : "unpinned"} successfully`,
-      response: note,
+      success: true,  
+      message: `Note ${updatedNote.isPinned ? "pinned" : "unpinned"} successfully`,
+      response: updatedNote,
     });
   } catch (error) {
+    console.error("FULL PIN ERROR:", error);
     logger.warn(error.message);
     return res.status(500).json({ success: false, message: "Something went wrong. Please try again." });
   }
@@ -309,7 +316,7 @@ const handlPermanentDelete=async(req, res)=>{
 const editNote=async(req, res)=>{
  const {noteId}=req.params;
  const userId=req.user?.userId;
- let {title, description}=req.body;
+ let {title, description, category}=req.body;
 
  title=title?.trim();
  description=description?.trim();
@@ -324,10 +331,12 @@ const editNote=async(req, res)=>{
     
     const response=await Notes.findOneAndUpdate({_id:noteId, userId: userId, isDeleted: false}, {
       title: title,
-      description:description
+      description:description,
+      category:category || null,
     },
   {new:true, runValidators:true}
-);
+).populate('category');
+
 if(!response){
   return res.status(404).json({
     success:false,
