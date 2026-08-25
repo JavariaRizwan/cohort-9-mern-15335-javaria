@@ -1,0 +1,4 @@
+# SonarQube & SonarScanner
+.scannerwork/
+sonar-project.properties
+sonarQube_report.zip

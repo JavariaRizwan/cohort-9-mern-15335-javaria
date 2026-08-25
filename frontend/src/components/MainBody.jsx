@@ -144,6 +144,7 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
 
 
+
 const MainBody = ({ activeCategory, searchQuery, categories=[], onSelectCategory}) => {
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [notes, setNotes] = useState([]);
@@ -372,6 +373,104 @@ return 'My Notes'
 }
 
 
+
+
+const renderContent = () => {
+    if (currentCategory === 'categories') {
+      if (filteredCategories.length === 0) {
+        return (
+          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs">
+            <p className="text-slate-500 text-sm">No categories found.</p>
+          </div>
+        );
+      }
+      return (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredCategories.map((cat) => {
+            const catName = typeof cat === 'string' ? cat : cat.c_name;
+            const catId = cat._id || cat.id;
+            return (
+              <button 
+                type="button" 
+                key={catId}
+                onClick={() => onSelectCategory ? onSelectCategory(catId) : console.log(catId)}
+                className="w-full text-left bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-xs hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-between group hover:-translate-y-0.5"
+              >
+                <p className="text-slate-900 text-sm sm:text-base group-hover:text-blue-600 transition-colors">
+                  {catName}
+                </p>
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+
+    if (sortedNotes.length === 0) {
+      return (
+      
+        <div className="bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
+          <div className="flex justify-between items-start">
+            <h3 className="font-semibold text-slate-900 text-base sm:text-lg">
+              No {currentCategory} notes found
+            </h3>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <>
+      {sortedNotes.map((note) => {
+      const currentId = note._id || note.id;
+      return (
+        <button 
+          type='button'
+          tabIndex={0}
+          onKeyDown={(e) => handleKeyDownNote(e, note)}
+          onClick={(e) => handleUpdate(e, note)}
+          key={currentId}
+          className={`group relative text-left w-full bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
+            note.isPinned ? "border-l-amber-500 bg-amber-50/20 " : "border-l-blue-500"
+          }`}
+        >
+          <div className="flex justify-between items-center gap-4">
+            <div className="flex flex-col gap-1">
+              <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
+                {note.title}
+              </h3>
+              <span className="w-fit text-xs text-blue-600 bg-blue-50 font-medium px-2 py-0.5 rounded-full">
+                {note.category?.c_name || "Uncategorized"}
+              </span>
+            </div>
+            <button type="button" className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+              {getNoteActionButtons(currentCategory, note, currentId, {
+                handleDelete,
+                openDeletePopup,
+                handleArchive,
+                handlePin,
+                handleUpdate
+              })}
+              <DownloadNote note={note} />
+            </button>
+          </div>
+
+          <div
+            className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(note.description || '')
+            }}
+          />
+        </button>
+      );
+    })};
+  </>
+    );
+  
+  };
+
+
+
   return (
     <>
       <main className="flex-1 p-3 sm:p-5 md:p-6 max-w-5xl mx-auto space-y-4">
@@ -414,87 +513,8 @@ return 'My Notes'
 
 <div className="space-y-3">
 
-          {currentCategory === 'categories' ? (
-            filteredCategories.length === 0 ? (
-              <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs">
-                <p className="text-slate-500 text-sm">No categories found.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filteredCategories.map((cat) => {
-                  const catName = typeof cat === 'string' ? cat : cat.c_name;
-                  const catId = cat._id || cat.id;
-                  return (
-                    <button type="button" 
-                      key={catId}
-                      onClick={() => onSelectCategory ? onSelectCategory(catId) : console.log(catId)}
-className="w-full text-left bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-xs hover:shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-between group hover:-translate-y-0.5">
-                      <p className="text-slate-900 text-sm sm:text-base group-hover:text-blue-600 transition-colors">
-                        {catName}
-                      </p>
+{renderContent()}
 
-
-                    </button>
-                   
-                  );
-                })}
-              </div>
-            )
-          ) : (
-            sortedNotes.length === 0 ? (
-              <div className="bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
-                <div className="flex justify-between items-start">
-                  <h3 className="font-semibold text-slate-900 text-base sm:text-lg">
-                    No {currentCategory} notes found
-                  </h3>
-                </div>
-              </div>
-            ) : (
-              sortedNotes.map((note) => {
-                const currentId = note._id || note.id;
-                return (
-                  <button type='button'
-                    tabIndex={0}
-                    onKeyDown={(e) => handleKeyDownNote(e, note)}
-                    onClick={(e) => handleUpdate(e, note)}
-                    key={currentId}
-                    className={`group relative text-left w-full bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${note.isPinned
-                      ? "border-l-amber-500 bg-amber-50/20 "
-                      : "border-l-blue-500"
-                    }`}
-                  >
-                    <div className="flex justify-between items-center gap-4">
-                      <div className="flex flex-col gap-1">
-                      <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
-                        {note.title}
-                      </h3>
-                      <span className="w-fit text-xs text-blue-600 bg-blue-50 font-medium px-2 py-0.5 rounded-full">
-  {note.category?.c_name || "Uncategorized"}
-</span>
-</div>
-                      <button type="button" className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
-                        {getNoteActionButtons(currentCategory, note, currentId, {
-                          handleDelete,
-                          openDeletePopup,
-                          handleArchive,
-                          handlePin,
-                          handleUpdate
-                        })}
-                        <DownloadNote note={note} />
-                      </button>
-                    </div>
-
-                    <div
-                      className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(note.description || '')
-                      }}
-                    />
-                  </button>
-                );
-              })
-            )
-          )}
         </div>
 
 

@@ -5,6 +5,19 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ImportFile from '../additional-features/ImportFile';
 
+
+if (typeof File !== 'undefined' && !File.prototype.text) {
+  File.prototype.text = function () {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsText(this);
+    });
+  };
+}
+
+
 describe("Import button component", ()=>{
     it("shoudl show the button", async()=>{
         render(<ImportFile />);
