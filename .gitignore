@@ -1,0 +1,3 @@
+# SonarQube & SonarScanner
+.scannerwork/
+sonar-project.properties

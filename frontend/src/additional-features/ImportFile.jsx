@@ -9,7 +9,7 @@ const handleImportButton=()=>{
   inputFileRef.current.click();
 }
 
-const handleFileChange=(e)=>{
+const handleFileChange= async(e)=>{
 const file=e.target.files[0];
 if(!file) return;
 
@@ -20,20 +20,23 @@ if (file.type !== "text/plain" && !file.name.endsWith(".txt")) {
     }
 
 try {
-const reader = new FileReader();
-        reader.onload = (event) => {
-            const fileContent = event.target.result;
-            console.log("File loaded suessfully, it's length is ", fileContent.length, "characters");
+// const reader = new FileReader();
+//         reader.onload = (event) => {
+//             const fileContent = event.target.result;
+//             console.log("File loaded suessfully, it's length is ", fileContent.length, "characters");
+  const fileContent = await file.text();
+      console.log("File loaded successfully, it's length is", fileContent.length, "characters");
             if (onFileImport) {
                 onFileImport(fileContent);
             }
-        };
-        reader.onerror = (error) => {
-            console.error("Error occurred while loading file", error);
-        };
+          
+        // };
+        // reader.onerror = (error) => {
+        //     console.error("Error occurred while loading file", error);
+        // };
         
-        reader.readAsText(file);
-        e.target.value = "";
+        // reader.readAsText(file);
+        // e.target.value = "";
 
 } catch (error) {
   console.error("Error occured while loadign file", error.message);
