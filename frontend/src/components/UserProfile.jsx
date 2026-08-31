@@ -40,6 +40,9 @@ const UserProfile = ({ onLogout }) => {
 
     if (profileData.loading) return <div className="p-8 text-center">Loading profile...</div>;
 
+    if (!profileData.user) {
+   return <div className="p-8 text-center">Unable to load profile.</div>;
+    }
     const { user, notes } = profileData;
     const totalNotes = notes?.length || 0;
     const trashItems = notes?.filter(n => n.isDeleted).length || 0;
@@ -77,7 +80,7 @@ const UserProfile = ({ onLogout }) => {
 
 
             {/* All crads */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col lg:flex-row gap-4">
                 <div className="flex-1 p-5 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex items-center gap-4">
                     <div className="p-3.5 bg-blue-50 text-blue-600 rounded-xl"><FileText className="w-6 h-6" /></div>
                     <div>

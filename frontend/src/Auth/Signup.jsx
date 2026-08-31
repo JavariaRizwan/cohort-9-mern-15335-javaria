@@ -121,7 +121,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-        <div className="w-full md:w-7/12 p-6 bg-white">
+        <div className="w-full md:w-7/12 p-6 bg-white overflow-y-auto">
 
           <div className="mb-2">
 

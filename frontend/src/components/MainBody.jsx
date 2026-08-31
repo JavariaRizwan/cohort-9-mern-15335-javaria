@@ -532,7 +532,7 @@ const renderMainContent = () => {
                     {note.category?.c_name || "Uncategorized"}
                   </span>
                 </div>
-                <button type="button" className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                   {getNoteActionButtons(currentCategory, note, currentId, {
                     handleDelete,
                     openDeletePopup,
@@ -541,7 +541,7 @@ const renderMainContent = () => {
                     handleUpdate
                   })}
                   <DownloadNote note={note} />
-                </button>
+                </div>
               </div>
               <div
                 className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"

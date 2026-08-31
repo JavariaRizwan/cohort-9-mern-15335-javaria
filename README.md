@@ -3,7 +3,7 @@
 * **Repository Identifier**: `cohort-9-mern-15335-javaria`
 * **Program Context**: Developed as part of the 10Pearls Shine Internship Program (Cohort 9).
 * **Project Description**: A comprehensive, full-stack note-taking web application engineered to provide secure user sessions, granular category organization, priority note pinning, and seamless text file import/export utilities.
-* **Tech Stack**: React, Express.js, Node.js, MongoDB Atlas, Pino logging, and Tailwind CSS.
+* **Tech Stack**: React, Express.js, Node.js, MongoDB Atlas, Pino logging, styled-components and Tailwind CSS.
 
 ## Architectural Overview & Tech Stack
 
@@ -48,7 +48,7 @@ cohort-9-mern-15335-javaria/
 # Getting Started & Local Installation
 ## Clone the repository
 
-* git clone [https://github.com/your-username/cohort-9-mern-15335-javaria.git](https://github.com/your-username/cohort-9-mern-15335-javaria.git)
+* git clone [https://github.com/JavariaRizwan/cohort-9-mern-15335-javaria.git](https://github.com/JavariaRizwan/cohort-9-mern-15335-javaria.git)
 * cd cohort-9-mern-15335-javaria
 
 ## Backend Configuration & Setup:
