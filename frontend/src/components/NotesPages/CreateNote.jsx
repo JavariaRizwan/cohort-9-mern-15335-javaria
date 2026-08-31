@@ -113,9 +113,6 @@ if (isEditingNote) {
             toast.error(error.message || "Failed to save Note!");
             setIsSubmitting(false);
         }
-        finally{
-            setIsSubmitting(false);
-        }
     };
 
     return (

@@ -4,4 +4,17 @@
   --font-sans: 'Lato', sans-serif;
   --color-note-taupe: #5B5BFF;
   --color-note-lavender: #8F84C1;
+ 
 }
+
+@layer utilities {
+  .form-input {
+    @apply w-full pl-8 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20
+  }
+.form-button{
+@apply w-full mt-1 py-2 px-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer
+
+}
+
+}
+

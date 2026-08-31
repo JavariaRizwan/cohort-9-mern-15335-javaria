@@ -6,6 +6,54 @@ import { useNavigate } from 'react-router-dom'
 import { BookOpen, Folder, Star, Trash2, LogOut, LayoutGrid, Plus, FolderPlus } from 'lucide-react';
 import CreateNote from './NotesPages/CreateNote';
 
+import styled from 'styled-components'
+
+
+const Button=styled.button`
+width: 100%;
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 8px 12px;
+font-size: 14px;
+font-weight: 500;
+border-radius: 12px;
+border: none;
+background: none;
+cursor: pointer;
+text-align: left;
+transition: background 0.15s ease, color 0.15s ease;
+background-color: ${({ active }) => (active ? '#eff6ff' : 'transparent')};
+  color: ${({ active }) => (active ? '#2563eb' : '#475569')};
+
+  &:hover {
+    background-color: ${({ active }) => (active ? '#eff6ff' : '#f1f5f9')};
+  }
+
+`
+
+const TopButton=styled.button`
+flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+
+  &:active {
+    transform: scale(0.98);
+  }
+`
+
+
+
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen, onLogout, activeCategory, setActiveCategory, onCategoryAdded }) => {
 
 const [isModelOpen, setIsModelOpen]=useState(false);
@@ -99,7 +147,7 @@ className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r bor
 
 
 <div className="flex gap-2 px-3 mb-3 w-full">
-    <button 
+    <TopButton 
         type="button"
                      onClick={() => {
     setIsModelOpen(true);
@@ -107,72 +155,57 @@ className={`fixed md:sticky left-0 top-16 h-[calc(100vh-4rem)] w-64 border-r bor
       setSidebarOpen(false);
     }
   }} 
-        className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium text-xs py-2 px-2 rounded-xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] cursor-pointer"
+        className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white hover:shadow-md active:scale-[0.98]"
         title="Create New Note"
     >
   <Plus className="w-4 h-4" strokeWidth={2.5} />
 
         <span>New Note</span>
-    </button>
+    </TopButton>
 
-    <button 
+    <TopButton 
         type="button" 
         onClick={openSavePopup}
-        className="flex-1 flex items-center justify-center gap-1.5 bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-medium text-xs py-2 px-2 rounded-xl shadow-sm transition-all active:scale-[0.98] cursor-pointer"
+        className="bg-white border border-blue-600 hover:bg-blue-50 text-blue-600 font-medium text-xs shadow-sm active:scale-[0.98]"
         title="Add Category"
     >
            <FolderPlus className="w-4 h-4" strokeWidth={2} />
 
         <span>Category</span>
-    </button>
+    </TopButton>
 </div>
 
 
 
-            <button
+            <Button
 onClick={() => handleNavClick('all')} 
-            type="button"
-            className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
-    !activeCategory || activeCategory === 'all'
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-600 hover:bg-slate-100'
-  }`}>
+active={!activeCategory || activeCategory === 'all'}
+
+>
               <BookOpen size={18} />
               All Notes
-            </button>
-            <button
+            </Button>
+            <Button
             onClick={() => handleNavClick('pinned')}
-            type="button" 
-            className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
-    activeCategory === 'pinned'
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-600 hover:bg-slate-100'
-  }`}>
+            active={activeCategory === 'pinned'}
+>
               <Star size={18} />
               Pinned
-            </button>
-            <button
+            </Button>
+            <Button
             onClick={() => handleNavClick('archived')}
-            type="button" className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
-    activeCategory === 'archived'
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-600 hover:bg-slate-100'
-  }`}>
+            active={activeCategory === 'archived'}
+  >
               <Folder size={18} />
               Archived
-            </button>
-<button
+            </Button>
+<Button
   onClick={() => handleNavClick('categories')} 
-  type="button"
-  className={`w-full flex items-center cursor-pointer gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
-    activeCategory === 'categories'
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-600 hover:bg-slate-100'
-  }`}
+active={activeCategory === 'categories'}
 >
   <LayoutGrid size={18} />
   All Categories
-</button>
+</Button>
 
            
           </nav>
@@ -183,16 +216,13 @@ onClick={() => handleNavClick('all')}
             Archive
           </p>
           <nav className="space-y-1">
-            <button
+            <Button
               onClick={() => handleNavClick('trash')}
-              type="button" className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-xl transition-colors ${
-    activeCategory === 'trash'
-      ? 'bg-blue-50 text-blue-600'
-      : 'text-slate-600 hover:bg-slate-100'
-  }`}>
+              active={activeCategory === 'trash'}
+              >
               <Trash2 size={18} />
               Trash
-            </button>
+            </Button>
           </nav>
         </div>
       </div>
