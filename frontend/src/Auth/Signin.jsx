@@ -36,11 +36,9 @@ const SignIn=({ onSuccess })=> {
   return (
 <div className="min-h-screen w-full flex items-center justify-center p-0 md:p-3 bg-white md:bg-slate-100/80 text-slate-800 transition-colors">
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">    
-        <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
 
-  <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
 
-  <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-indigo-400/20 rounded-full blur-2xl pointer-events-none" />
+  <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 to-purple-700 p-6">
 
           <div className="relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md p-2 flex items-center justify-center shadow-sm border border-white/20 mb-2">
@@ -50,13 +48,13 @@ const SignIn=({ onSuccess })=> {
                 className="w-full h-full object-contain drop-shadow-md"
               />
             </div>
-            <h1 className="text-xl font-extrabold tracking-tight">StackNotes</h1>
-            <p className="text-blue-100/90 text-[11px] mt-0.5 font-medium leading-snug">
+            <h1 className="text-xl text-white font-extrabold tracking-tight">StackNotes</h1>
+            <p className="text-blue-100/90 text-xs mt-0.5 font-medium mb-3">
               Welcome back to your workspace.
             </p>
           </div>
 
-          <div className="relative z-10 text-center md:text-left text-[11px] text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
+          <div className="relative z-10 text-center md:text-left text-xs text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
             <p>Access all your synchronized notes.</p>
           </div>
         </div>
@@ -66,14 +64,14 @@ const SignIn=({ onSuccess })=> {
             <h2 className="text-xl font-bold tracking-tight text-slate-900">
               Sign In
             </h2>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-xs text-slate-500">
               Enter your details to sign in to your account
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>
-              <label htmlFor="usernameOrEmail" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="usernameOrEmail" className="block text-xs font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
                 Username / Email
               </label>
               <div className="relative">
@@ -89,7 +87,7 @@ const SignIn=({ onSuccess })=> {
                   onChange={handleChange}
                   required
                   placeholder="Enter your username/email"
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="form-input"
                 />
               </div>
             </div>
@@ -97,7 +95,7 @@ const SignIn=({ onSuccess })=> {
 
 <div>
               <div className="flex justify-between items-center mb-0.5">
-                <label htmlFor='password' className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                <label htmlFor='password' className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
                   Password
                 </label>
               </div>
@@ -114,7 +112,7 @@ const SignIn=({ onSuccess })=> {
                   onChange={handleChange}
                   required
                   placeholder="Enter your password"
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="form-input"
                 />
                 <button
                   type="button"
@@ -128,7 +126,7 @@ const SignIn=({ onSuccess })=> {
               <div className="flex justify-end mt-1">
                 <button
                   type="button"
-                  className="text-[10px] font-medium text-blue-600 hover:underline"
+                  className="text-xs font-medium text-blue-600 hover:underline"
                 >
                   Having trouble in sign in?
                 </button>
@@ -139,14 +137,14 @@ const SignIn=({ onSuccess })=> {
 
             <button
               type="submit"
-              className="w-full cursor-pointer mt-2 py-2 px-3 bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group"
+              className="form-button"
             >
               <span>Log In</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </button>
           </form>
 
-          <div className="mt-4 text-center text-[11px] text-slate-500">
+          <div className="mt-4 text-center text-xs text-slate-500">
             Don't have an account?{' '}
             <button type="button"
               onClick={() => navigate('/signup')}

@@ -1,9 +1,9 @@
 
+
 import { toast } from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import CreateNote from './NotesPages/CreateNote';
 import DOMPurify from 'dompurify'
-
 
 import {RotateCcw, Trash2, ArchiveRestore, Archive, Pin, Pencil, Plus} from 'lucide-react'
 
@@ -13,6 +13,96 @@ import sortingOptions from '../data/sortingOptions';
 
 import DownloadNote from '../additional-features/DownloadNote';
 import ImportFile from "../additional-features/ImportFile"
+
+
+
+import styled from 'styled-components';
+
+const Button = styled.button`
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  justify-content: center;
+  color: #ffffff;
+  background-image: linear-gradient(to bottom right, #9333ea, #3b82f6);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.375rem 0.5rem;
+  text-align: center;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: none;
+
+  &:hover {
+    background-image: linear-gradient(to bottom left, #9333ea, #3b82f6);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px #93c5fd, 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  @media (min-width: 640px) {
+    padding: 0.625rem 1rem;
+  }
+`;
+
+
+const Actions=styled.button`
+position: relative;
+  z-index: 20;
+  pointer-events: auto;
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  opacity: 0;
+  .group:hover & {
+    opacity: 1;
+  }
+
+ &:hover {
+    color: ${({ $hoverColor }) => $hoverColor || '#2563eb'};
+    background-color: #f1f5f9;
+  }
+`
+
+
+const Card=styled.div`
+width: 100%;
+  text-align: left;
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  border-left-width: 4px;
+  border-left-color: ${({ isPinned }) => (isPinned ? '#f59e0b' : '#3b82f6')};
+  
+  &:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  @media (min-width: 640px) {
+    padding: 1.25rem;
+  }
+`
 
 
 const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
@@ -27,26 +117,27 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
         <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
 
 
-                          <button
+                          <Actions
                             type="button"
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Restore note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-blue-500 hover:bg-blue-100  transition-colors"
-                          >
+                            $hoverColor="#3b82f6"
+
+                         >
                             <RotateCcw className="w-4 h-4 pointer-events-none" strokeWidth={2} />
 
-                          </button>
+                          </Actions>
 
 
                         
-                        <button
+                        <Actions
                           type="button"
                           onClick={(e) => openDeletePopup(e, currentId)}
                           title="Delete note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+  $hoverColor="#f43f5e"
                         >
             <Trash2 className="w-4 h-4 pointer-events-none" strokeWidth={2} />
-                        </button>
+                        </Actions>
 
                       </div>
 
@@ -57,26 +148,28 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
           <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shrink-0 pointer-events-none group-hover:pointer-events-auto">
 
 
-                          <button
+                          <Actions
                             type="button"
                             onClick={(e) => handleArchive(e, currentId)}
                             title="Un Archive note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
+                          $hoverColor="#d97706"
+
                           >
             <ArchiveRestore className="w-4 h-4 pointer-events-none" strokeWidth={2} />
 
-                          </button>
+                          </Actions>
 
 
 
-                          <button
+                          <Actions
                             type="button"
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
+  $hoverColor="#f43f5e"
+
                           >
             <Trash2 className="w-4 h-4 pointer-events-none" strokeWidth={2} />
-                          </button>
+                          </Actions>
                         </div>
         )
 
@@ -103,35 +196,38 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
             />                        </button>
 
 
-                        <button
+                        <Actions
                           type="button"
                           onClick={(e) => handleArchive(e, currentId)}
                           title="Archive note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-amber-600 hover:bg-slate-100 transition-colors"
-                        >
+                              $hoverColor="#d97706"
+
+         >
                           <Archive className="w-4 h-4 pointer-events-none" strokeWidth={2} />
 
-                        </button>
+                        </Actions>
 
 
-                        <button
+                        <Actions
                           type="button"
                           onClick={(e) => handleUpdate(e, note)}
                           title="Edit note"
-                          className="relative z-20 pointer-events-auto p-1.5 rounded-lg cursor-pointer text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors"
-                        >
+                              $hoverColor="#2563eb"
+
+>
             <Pencil className="w-4 h-4 pointer-events-none" strokeWidth={2} />
-                        </button>
+                        </Actions>
 
 
-                          <button
+                          <Actions
                             type="button"
                             onClick={(e) => handleDelete(e, currentId)}
                             title="Delete note"
-                            className="relative z-20 pointer-events-auto p-1.5 rounded-lg text-slate-400 cursor-pointer hover:text-rose-500 hover:bg-slate-100  transition-colors"
-                          >
+  $hoverColor="#f43f5e"
+
+>
             <Trash2 className="w-4 h-4 pointer-events-none" strokeWidth={2} />
-                          </button>
+                          </Actions>
 
 </div>
 
@@ -140,7 +236,6 @@ const getNoteActionButtons=(currentCategory, note, currentId, buttonHandlers)=>{
 
   }
 }
-
 
 
 
@@ -374,16 +469,15 @@ return 'My Notes'
 
 
 
-
-const renderContent = () => {
-    if (currentCategory === 'categories') {
-      if (filteredCategories.length === 0) {
-        return (
-          <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs">
-            <p className="text-slate-500 text-sm">No categories found.</p>
-          </div>
-        );
-      }
+const renderMainContent = () => {
+  if (currentCategory === 'categories') {
+    if (filteredCategories.length === 0) {
+      return (
+        <div className="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs">
+          <p className="text-slate-500 text-sm">No categories found.</p>
+        </div>
+      );
+    } else {
       return (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredCategories.map((cat) => {
@@ -405,69 +499,65 @@ const renderContent = () => {
         </div>
       );
     }
-
-    if (sortedNotes.length === 0) {
-      return (
-      
-        <div className="bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs transition-all border-l-4 border-l-blue-500">
-          <div className="flex justify-between items-start">
-            <h3 className="font-semibold text-slate-900 text-base sm:text-lg">
-              No {currentCategory} notes found
-            </h3>
-          </div>
-        </div>
-      );
-    }
-
+  } else if (sortedNotes.length === 0) {
     return (
-      <>
-      {sortedNotes.map((note) => {
-      const currentId = note._id || note.id;
-      return (
-        <button 
-          type='button'
-          tabIndex={0}
-          onKeyDown={(e) => handleKeyDownNote(e, note)}
-          onClick={(e) => handleUpdate(e, note)}
-          key={currentId}
-          className={`group relative text-left w-full bg-white cursor-pointer border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-xs hover:shadow-md transition-all border-l-4 ${
-            note.isPinned ? "border-l-amber-500 bg-amber-50/20 " : "border-l-blue-500"
-          }`}
-        >
-          <div className="flex justify-between items-center gap-4">
-            <div className="flex flex-col gap-1">
-              <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
-                {note.title}
-              </h3>
-              <span className="w-fit text-xs text-blue-600 bg-blue-50 font-medium px-2 py-0.5 rounded-full">
-                {note.category?.c_name || "Uncategorized"}
-              </span>
-            </div>
-            <button type="button" className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
-              {getNoteActionButtons(currentCategory, note, currentId, {
-                handleDelete,
-                openDeletePopup,
-                handleArchive,
-                handlePin,
-                handleUpdate
-              })}
-              <DownloadNote note={note} />
-            </button>
-          </div>
-
-          <div
-            className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(note.description || '')
-            }}
-          />
-        </button>
-      );
-    })};
-  </>
+      <Card>
+        <div className="flex justify-between items-start">
+          <h3 className="font-semibold text-slate-900 text-base sm:text-lg">
+            No {currentCategory} notes found
+          </h3>
+        </div>
+      </Card>
     );
-  
-  };
+  } else {
+    return (
+      <div className="space-y-4">
+        {sortedNotes.map((note) => {
+          const currentId = note._id || note.id;
+          return (
+            <Card 
+              className="group"
+              isPinned={note.isPinned}
+              tabIndex={0}
+              onKeyDown={(e) => handleKeyDownNote(e, note)}
+              onClick={(e) => handleUpdate(e, note)}
+              key={currentId}
+            >
+              <div className="flex justify-between items-center gap-4">
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-semibold line-clamp-1 text-slate-900 text-base sm:text-lg">
+                    {note.title}
+                  </h3>
+                  <span className="w-fit text-xs text-blue-600 bg-blue-50 font-medium px-2 py-0.5 rounded-full">
+                    {note.category?.c_name || "Uncategorized"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
+                  {getNoteActionButtons(currentCategory, note, currentId, {
+                    handleDelete,
+                    openDeletePopup,
+                    handleArchive,
+                    handlePin,
+                    handleUpdate
+                  })}
+                  <DownloadNote note={note} />
+                </div>
+              </div>
+              <div
+                className="text-slate-600 text-sm mt-1 line-clamp-1 prose max-w-none"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(note.description || '')
+                }}
+              />
+            </Card>
+          );
+        })}
+      </div>
+    );
+  }
+};
+
+
 
 
 
@@ -488,15 +578,14 @@ const renderContent = () => {
           </div>
 
 <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-<button
+<Button
   type="button"
   onClick={handleOpenCreateModal}
-  className="cursor-pointer inline-flex items-center gap-1.5 justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl rounded-lg focus:ring-4 focus:outline-none focus:ring-blue-300 text-sm px-2 py-1.5 sm:px-4 sm:py-2.5 text-center leading-5 transition-all shadow-sm"
->
+> 
   <Plus className="w-4 h-4" strokeWidth={2.5} />
 
   <span className="hidden sm:inline">New Note</span>
-</button>
+</Button>
 
 <ImportFile onFileImport={handleFileImport}/>
 </div>
@@ -513,7 +602,8 @@ const renderContent = () => {
 
 <div className="space-y-3">
 
-{renderContent()}
+{renderMainContent()}
+
 
         </div>
 

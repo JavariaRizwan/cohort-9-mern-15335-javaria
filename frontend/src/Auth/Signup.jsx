@@ -80,14 +80,8 @@ const SignUp=({ onSuccess })=> {
   <div className="w-full h-full min-h-screen md:min-h-0 md:max-w-3xl md:max-h-[88vh] bg-white rounded-none md:rounded-2xl shadow-none md:shadow-xl border-none md:border md:border-slate-200/80 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">        
 
 
-        <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white p-5 md:p-6 flex flex-col justify-between relative overflow-hidden shrink-0">
-
-          <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
-
-          <div className="absolute -bottom-12 -right-12 w-44 h-44 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
-
-
-
+      <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 to-purple-700 p-6">
+     
           <div className="relative z-10 flex flex-col items-center md:items-start text-center md:text-left">
 
             <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md p-2 flex items-center justify-center shadow-sm border border-white/20 mb-2">
@@ -104,9 +98,9 @@ const SignUp=({ onSuccess })=> {
 
             </div>
 
-            <h1 className="text-xl font-extrabold tracking-tight">StackNotes</h1>
+            <h1 className="text-xl font-extrabold tracking-tight text-white">StackNotes</h1>
 
-            <p className="text-blue-100/90 text-[11px] mt-0.5 font-medium leading-snug">
+            <p className="text-blue-100/90 text-xs mt-0.5 font-medium mb-3">
 
               Start building your personal knowledge memory stack.
 
@@ -116,7 +110,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="relative z-10 text-center md:text-left text-[11px] text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
+          <div className="relative z-10 text-center md:text-left text-xs text-blue-100/80 pt-3 border-t border-white/15 mt-4 md:mt-0">
 
             <p>Join StackNotes today.</p>
 
@@ -127,7 +121,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-        <div className="w-full md:w-7/12 p-4 sm:p-6 flex flex-col justify-center bg-white overflow-y-auto">
+        <div className="w-full md:w-7/12 p-6 bg-white overflow-y-auto">
 
           <div className="mb-2">
 
@@ -137,7 +131,7 @@ const SignUp=({ onSuccess })=> {
 
             </h2>
 
-            <p className="text-[11px] text-slate-500">
+            <p className="text-xs text-slate-500">
 
               Enter your details to create your account
 
@@ -147,7 +141,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200/60 text-blue-700 text-[11px] font-medium">
+          <div className="mb-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 border border-blue-200/60 text-blue-700 text-xs font-medium">
 
             <Lock size={12} className="shrink-0 text-blue-600" />
 
@@ -161,7 +155,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor='username' className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
+              <label htmlFor='username' className="block text-xs font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Username
 
@@ -189,7 +183,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your username"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="form-input"
 
                 />
 
@@ -201,7 +195,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="email" className="block text-xs font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Email Address
 
@@ -229,7 +223,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="name@example.com"
 
-                  className="w-full pl-8 pr-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="form-input"
 
                 />
 
@@ -241,7 +235,7 @@ const SignUp=({ onSuccess })=> {
 
             <div>
 
-              <label htmlFor="password" className="block text-[10px] font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
+              <label htmlFor="password" className="block text-xs font-bold text-slate-500 mb-0.5 uppercase tracking-wider">
 
                 Password
 
@@ -268,7 +262,7 @@ const SignUp=({ onSuccess })=> {
 
                   placeholder="Enter your password"
 
-                  className="w-full pl-8 pr-8 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none text-slate-800 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  className="form-input"
 
                 />
 
@@ -316,7 +310,7 @@ const SignUp=({ onSuccess })=> {
 
                 htmlFor="emailUpdates"
 
-                className="text-[11px] text-slate-600 cursor-pointer select-none font-medium"
+                className="text-xs text-slate-600 cursor-pointer select-none font-medium"
 
               >
 
@@ -332,7 +326,7 @@ const SignUp=({ onSuccess })=> {
 
               type="submit"
 
-              className="w-full mt-1 py-2 px-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-lg text-xs shadow-xs hover:shadow-md transition-all flex items-center justify-center gap-1.5 group cursor-pointer"
+              className="form-button"
 
             >
 
@@ -347,7 +341,7 @@ const SignUp=({ onSuccess })=> {
 
 
 
-          <div className="mt-3 text-center text-[11px] text-slate-500">
+          <div className="mt-3 text-center text-xs text-slate-500">
 
             Already have an account?{' '}
 
